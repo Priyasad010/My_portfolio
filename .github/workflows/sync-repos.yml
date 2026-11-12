@@ -1,17 +1,11 @@
 name: Sync GitHub projects
 
-# Every 6 hours (and on demand) this lists my public repositories tagged with the
-# "portfolio" topic and saves them to data/repos.js, which the site shows under
-# "More from GitHub". If nothing changed, nothing is committed.
+# MANUAL ONLY: this never runs by itself. To use it, open the Actions tab, choose
+# "Sync GitHub projects" and click "Run workflow". It then lists my public repositories
+# tagged with the "portfolio" topic and saves them to data/repos.js, which the site shows
+# under "More from GitHub". If nothing changed, nothing is committed.
 on:
-  schedule:
-    - cron: '17 */6 * * *'
   workflow_dispatch:
-  push:
-    branches: [main]
-    paths:
-      - 'scripts/sync-repos.mjs'
-      - '.github/workflows/sync-repos.yml'
 
 permissions:
   contents: write

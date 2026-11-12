@@ -1,5 +1,6 @@
 // Reads the public repositories of OWNER and writes data/repos.js with the ones tagged with TOPIC.
-// Runs in GitHub Actions (see .github/workflows/sync-repos.yml) but can also be run locally: node scripts/sync-repos.mjs
+// Runs only when started by hand: Actions tab > "Sync GitHub projects" > Run workflow
+// (see .github/workflows/sync-repos.yml). It can also be run locally: node scripts/sync-repos.mjs
 import { readFile, writeFile, mkdir } from 'node:fs/promises';
 import { pathToFileURL } from 'node:url';
 
