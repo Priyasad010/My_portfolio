@@ -196,6 +196,66 @@ lightbox.addEventListener('click', e => {
     if (e.target === lightbox || e.target.closest('[data-close]')) closeLightbox();
 });
 
+/* ---------- Architecture diagrams (inline SVG; colours come from the theme via CSS) ---------- */
+let svgUid = 0;
+function archSvg(w, h, label, build) {
+    const id = `arr${++svgUid}`;
+    const box = (x, y, bw, bh, title, lines = []) => {
+        const n = lines.length + 1, lh = 17;
+        const first = y + bh / 2 - ((n - 1) * lh) / 2 + 5;
+        return `<rect class="arch-box" x="${x}" y="${y}" width="${bw}" height="${bh}" rx="10"/>` +
+            `<text class="arch-t" x="${x + bw / 2}" y="${first}">${esc(title)}</text>` +
+            lines.map((l, i) => `<text class="arch-s" x="${x + bw / 2}" y="${first + (i + 1) * lh}">${esc(l)}</text>`).join('');
+    };
+    const link = (d, both = false) => `<path class="arch-line" d="${d}" marker-end="url(#${id})"${both ? ` marker-start="url(#${id})"` : ''}/>`;
+    const line = d => `<path class="arch-line" d="${d}"/>`;
+    const text = (x, y, s, cls = 'arch-lbl') => `<text class="${cls}" x="${x}" y="${y}">${esc(s)}</text>`;
+    const group = (x, y, gw, gh) => `<rect class="arch-group" x="${x}" y="${y}" width="${gw}" height="${gh}" rx="14"/>`;
+    return `<svg class="arch" viewBox="0 0 ${w} ${h}" role="img" aria-label="${esc(label)}" xmlns="http://www.w3.org/2000/svg">` +
+        `<defs><marker id="${id}" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path class="arch-head" d="M0 0L10 5L0 10z"/></marker></defs>` +
+        build({ box, link, line, text, group }) + '</svg>';
+}
+
+const smartSystemSvg = archSvg(640, 450,
+    'Smart Class Management System architecture: users use a React web app on Vercel, which talks to a Node.js and Express API on Render. The API uses PostgreSQL on Neon, a Python FastAPI AI service, Cloudinary media storage, and integrations such as Moodle, Twilio, PayHere or Stripe and Google Sheets.',
+    ({ box, link, line }) =>
+        box(170, 10, 300, 50, 'Users', ['Admin · Teacher · Student']) + link('M320 60V92') +
+        box(170, 92, 300, 72, 'React.js web app', ['Vite · Tailwind CSS · Chart.js', 'hosted on Vercel']) + link('M320 164V196', true) +
+        box(170, 196, 300, 72, 'Node.js / Express API', ['JWT · bcrypt · role-based access', 'hosted on Render']) +
+        line('M320 268V298') + line('M80 298H560') +
+        link('M80 298V328', true) + link('M240 298V328', true) + link('M400 298V328', true) + link('M560 298V328', true) +
+        box(10, 328, 140, 112, 'PostgreSQL', ['hosted on Neon']) +
+        box(170, 328, 140, 112, 'AI service', ['Python · FastAPI', 'YOLOv8 · OpenCV', 'dlib · MediaPipe']) +
+        box(330, 328, 140, 112, 'Cloudinary', ['media storage']) +
+        box(490, 328, 140, 112, 'Integrations', ['Moodle · Twilio', 'PayHere / Stripe', 'Google Sheets']));
+
+const smartFlowSvg = archSvg(640, 330,
+    'Layered attendance validation: students scan a QR code giving a scanned count, and a CCTV image is analysed by an AI model giving an estimated head count. The two counts are compared. If they match, attendance is accepted. If they differ, face verification runs.',
+    ({ box, link, text }) =>
+        box(10, 10, 210, 70, 'QR scan', ['students scan the class QR', 'scanned count']) +
+        box(420, 10, 210, 70, 'CCTV + AI head count', ['YOLOv8 · OpenCV', 'estimated count']) +
+        link('M115 80V108H270V132') + link('M525 80V108H370V132') +
+        box(215, 132, 210, 56, 'Compare the two counts') +
+        link('M270 188V214H120V240') + link('M370 188V214H520V240') +
+        text(195, 207, 'match') + text(445, 207, 'mismatch') +
+        box(10, 240, 220, 70, 'Counts match', ['attendance is accepted']) +
+        box(410, 240, 220, 70, 'Counts differ', ['face verification runs', '(dlib · MediaPipe)']));
+
+const rideSystemSvg = archSvg(640, 460,
+    'RideProfit architecture: on the driver phone an accessibility service reads a ride request from the PickMe or Uber app, a profit engine uses commission, fuel and running cost, and an overlay card shows a green, amber or red rating. History is kept in a Room database. The app syncs with a Node.js API on Vercel that uses PostgreSQL on Neon. A Next.js admin dashboard uses the same API. GitHub Actions runs the tests.',
+    ({ box, link, text, group }) =>
+        group(10, 10, 290, 440) + text(24, 34, "Driver's phone: Android app", 'arch-gt') + text(24, 52, 'Kotlin · Jetpack Compose', 'arch-gs') +
+        box(25, 68, 260, 50, 'PickMe / Uber driver app', ['ride request on screen']) + link('M155 118V146') +
+        box(25, 146, 260, 50, 'Accessibility Service', ['reads the fare and distance']) + link('M155 196V224') +
+        box(25, 224, 260, 60, 'Profit engine', ['commission · fuel · running cost', 'profit per km']) + link('M155 284V312') +
+        box(25, 312, 260, 50, 'Overlay card', ['green / amber / red rating']) + link('M155 362V390') +
+        box(25, 390, 260, 50, 'Room database', ['history · expenses · offline cache']) +
+        box(360, 30, 270, 66, 'Next.js admin dashboard', ['payments · drivers · analytics', 'hosted on Vercel']) + link('M495 96V146', true) +
+        box(360, 146, 270, 104, 'Node.js API', ['Express · TypeScript · Prisma', 'accounts (JWT) · Free / Pro plan', 'billing ledger · fuel prices', 'hosted on Vercel']) +
+        link('M495 250V300', true) + box(360, 300, 270, 56, 'PostgreSQL', ['hosted on Neon']) +
+        link('M300 198H360', true) + text(330, 188, 'sync') +
+        box(360, 390, 270, 60, 'GitHub Actions CI', ['169 unit tests · signed builds']));
+
 /* ---------- Project data + modal ---------- */
 const projects = {
     'smart-class': {
@@ -304,6 +364,12 @@ const projects = {
     }
 };
 
+projects['smart-class'].diagrams = [
+    { title: 'System architecture', svg: smartSystemSvg },
+    { title: 'Layered attendance validation', svg: smartFlowSvg }
+];
+projects['rideprofit'].diagrams = [{ title: 'System architecture', svg: rideSystemSvg }];
+
 const modal = $('#project-modal');
 const modalContent = $('#modal-content');
 let modalReturnFocus = null;
@@ -332,6 +398,8 @@ function openProject(id) {
             <h4>${esc(t('m.approach'))}</h4>${list(p.approach)}
             <h4>${esc(t('m.outcome'))}</h4><p class="modal-text">${esc(p.outcome)}</p>
         </div>` : ''}
+        ${p.diagrams ? `<h4>Architecture</h4>${p.diagrams.map(d =>
+            `<p class="arch-cap">${esc(d.title)}</p><div class="arch-wrap">${d.svg}</div>`).join('')}<p class="arch-hint">Swipe sideways to see the whole diagram.</p>` : ''}
         <h4>${esc(t('m.features'))}</h4>
         ${list(p.features)}
         ${p.highlight ? `<div class="modal-highlight"><strong>${esc(p.highlight[0])}</strong><p>${esc(p.highlight[1])}</p></div>` : ''}
@@ -514,3 +582,151 @@ form.addEventListener('submit', async e => {
     }
 });
 
+
+/* ---------- Command palette (Ctrl+K / Cmd+K, or the search button in the header) ---------- */
+const palette = $('#palette');
+const paletteInput = $('#palette-search');
+const paletteList = $('#palette-list');
+let paletteItemsShown = [], paletteActive = 0, paletteReturnFocus = null;
+
+function showToast(message) {
+    let toast = $('#toast');
+    if (!toast) {
+        toast = document.createElement('div');
+        toast.id = 'toast';
+        toast.setAttribute('role', 'status');
+        document.body.appendChild(toast);
+    }
+    toast.textContent = message;
+    toast.classList.add('show');
+    clearTimeout(showToast.timer);
+    showToast.timer = setTimeout(() => toast.classList.remove('show'), 2200);
+}
+
+const goTo = id => {
+    const el = document.getElementById(id);
+    if (el) el.scrollIntoView({ behavior: 'smooth' });
+};
+const openUrl = url => window.open(url, '_blank', 'noopener');
+
+const paletteItems = [
+    { group: 'Go to', label: 'Home', icon: 'bx-home', keys: 'top start hero intro', run: () => goTo('home') },
+    { group: 'Go to', label: 'About', icon: 'bx-user', keys: 'me bio who', run: () => goTo('about') },
+    { group: 'Go to', label: 'Education and experience', icon: 'bx-book', keys: 'university degree internship leo club work', run: () => goTo('education') },
+    { group: 'Go to', label: 'Skills', icon: 'bx-code-alt', keys: 'technologies stack tools react node', run: () => goTo('skills') },
+    { group: 'Go to', label: 'Projects', icon: 'bx-briefcase', keys: 'work portfolio apps', run: () => goTo('projects') },
+    { group: 'Go to', label: 'Certificates', icon: 'bx-award', keys: 'courses certifications workshops', run: () => goTo('certificates') },
+    { group: 'Go to', label: 'Contact', icon: 'bx-envelope', keys: 'form message hire reach', run: () => goTo('contact') },
+    { group: 'Projects', label: 'Smart Class Management System', icon: 'bx-qr-scan', keys: 'smart class attendance react ai thusitha', run: () => openProject('smart-class') },
+    { group: 'Projects', label: 'RideProfit', icon: 'bx-car', keys: 'ride profit android kotlin overlay pickme uber', run: () => openProject('rideprofit') },
+    { group: 'Actions', label: 'Download CV', icon: 'bx-download', keys: 'resume pdf', run: () => {
+        const a = document.createElement('a');
+        a.href = 'cv/Lasitha_Priyasad_CV.pdf';
+        a.download = '';
+        document.body.appendChild(a);
+        a.click();
+        a.remove();
+    } },
+    { group: 'Actions', label: 'Send an email', icon: 'bx-envelope', keys: 'mail contact', run: () => { window.location.href = `mailto:${emailAddr}`; } },
+    { group: 'Actions', label: 'Copy email address', icon: 'bx-copy', keys: 'mail clipboard', run: async () => {
+        try { await navigator.clipboard.writeText(emailAddr); showToast('Email address copied!'); }
+        catch (e) { showToast(emailAddr); }
+    } },
+    { group: 'Actions', label: 'Toggle dark / light theme', icon: 'bx-sun', keys: 'theme mode colour', run: () => themeBtn.click() },
+    { group: 'Links', label: 'GitHub', icon: 'bxl-github', keys: 'code repositories', run: () => openUrl('https://github.com/Priyasad010') },
+    { group: 'Links', label: 'LinkedIn', icon: 'bxl-linkedin', keys: 'profile network', run: () => openUrl('https://www.linkedin.com/in/lasitha-priyasad-3184732ab') },
+    { group: 'Links', label: 'WhatsApp', icon: 'bxl-whatsapp', keys: 'chat message', run: () => openUrl('https://wa.me/94743398128') }
+];
+
+function renderPalette() {
+    if (!paletteItemsShown.length) {
+        paletteList.innerHTML = '<li class="palette-empty">No matches. Try "projects", "cv" or "github".</li>';
+        paletteInput.removeAttribute('aria-activedescendant');
+        return;
+    }
+    let lastGroup = '';
+    paletteList.innerHTML = paletteItemsShown.map((it, i) => {
+        const head = it.group !== lastGroup ? `<li class="palette-group" role="presentation">${esc(it.group)}</li>` : '';
+        lastGroup = it.group;
+        return `${head}<li id="pal-${i}" role="option" class="palette-item${i === paletteActive ? ' active' : ''}" aria-selected="${i === paletteActive}" data-i="${i}">` +
+            `<i class='bx ${it.icon}'></i><span>${esc(it.label)}</span></li>`;
+    }).join('');
+    paletteInput.setAttribute('aria-activedescendant', `pal-${paletteActive}`);
+    const active = $('.palette-item.active', paletteList);
+    if (active) active.scrollIntoView({ block: 'nearest' });
+}
+
+function filterPalette() {
+    const words = paletteInput.value.toLowerCase().split(' ').filter(Boolean);
+    paletteItemsShown = paletteItems.filter(it => {
+        const hay = `${it.label} ${it.keys} ${it.group}`.toLowerCase();
+        return words.every(w => hay.includes(w));
+    });
+    paletteActive = 0;
+    renderPalette();
+}
+
+function openPalette() {
+    if (!palette.hidden) return;
+    paletteReturnFocus = document.activeElement;
+    paletteInput.value = '';
+    filterPalette();
+    palette.hidden = false;
+    document.body.classList.add('no-scroll');
+    paletteInput.focus();
+}
+
+function closePalette() {
+    if (palette.hidden) return;
+    palette.hidden = true;
+    if (modal.hidden && lightbox.hidden) document.body.classList.remove('no-scroll');
+    if (paletteReturnFocus && paletteReturnFocus.focus) paletteReturnFocus.focus();
+}
+
+function runPaletteItem(i) {
+    const item = paletteItemsShown[i];
+    if (!item) return;
+    closePalette();
+    // let the palette close (and focus return) before the action runs
+    setTimeout(() => item.run(), 0);
+}
+
+paletteInput.addEventListener('input', filterPalette);
+paletteInput.addEventListener('keydown', e => {
+    if (e.key === 'ArrowDown' || e.key === 'ArrowUp') {
+        e.preventDefault();
+        if (!paletteItemsShown.length) return;
+        paletteActive = (paletteActive + (e.key === 'ArrowDown' ? 1 : -1) + paletteItemsShown.length) % paletteItemsShown.length;
+        renderPalette();
+    } else if (e.key === 'Enter') {
+        e.preventDefault();
+        runPaletteItem(paletteActive);
+    } else if (e.key === 'Escape') {
+        e.stopPropagation();
+        closePalette();
+    }
+});
+paletteList.addEventListener('click', e => {
+    const li = e.target.closest('.palette-item');
+    if (li) runPaletteItem(+li.dataset.i);
+});
+paletteList.addEventListener('mousemove', e => {
+    const li = e.target.closest('.palette-item');
+    if (li && +li.dataset.i !== paletteActive) {
+        paletteActive = +li.dataset.i;
+        $$('.palette-item', paletteList).forEach(n => {
+            const on = +n.dataset.i === paletteActive;
+            n.classList.toggle('active', on);
+            n.setAttribute('aria-selected', on);
+        });
+        paletteInput.setAttribute('aria-activedescendant', `pal-${paletteActive}`);
+    }
+});
+palette.addEventListener('click', e => { if (e.target === palette) closePalette(); });
+$('#palette-btn').addEventListener('click', openPalette);
+document.addEventListener('keydown', e => {
+    if ((e.ctrlKey || e.metaKey) && e.key.toLowerCase() === 'k') {
+        e.preventDefault();
+        palette.hidden ? openPalette() : closePalette();
+    }
+});

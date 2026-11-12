@@ -15,8 +15,33 @@
     <meta property="og:title" content="Lasitha Priyasad - Web Developer">
     <meta property="og:description" content="Modern, responsive websites with clean design and great usability.">
     <meta property="og:url" content="https://priyasad010.github.io/My_portfolio/">
-    <meta property="og:image" content="https://priyasad010.github.io/My_portfolio/images/Untitled-1.png">
-    <meta name="twitter:card" content="summary">
+    <meta property="og:image" content="https://priyasad010.github.io/My_portfolio/images/og-image.jpg">
+    <meta property="og:image:width" content="1200">
+    <meta property="og:image:height" content="630">
+    <meta property="og:image:alt" content="Lasitha Priyasad - Full-Stack Developer, Web and Android">
+    <meta name="twitter:image" content="https://priyasad010.github.io/My_portfolio/images/og-image.jpg">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Lasitha Priyasad - Full-Stack Developer">
+
+    <!-- Structured data: tells search engines who this site is about -->
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "Person",
+        "name": "Lasitha Priyasad",
+        "url": "https://priyasad010.github.io/My_portfolio/",
+        "image": "https://priyasad010.github.io/My_portfolio/images/og-image.jpg",
+        "jobTitle": "Full-Stack Developer",
+        "description": "Full-stack developer who builds web and Android products. Computer Science undergraduate at Uva Wellassa University of Sri Lanka.",
+        "alumniOf": { "@type": "CollegeOrUniversity", "name": "Uva Wellassa University of Sri Lanka" },
+        "address": { "@type": "PostalAddress", "addressCountry": "LK" },
+        "knowsAbout": ["Web development", "Android development", "React", "Node.js", "PostgreSQL", "Kotlin", "Python", "Computer vision"],
+        "sameAs": [
+            "https://github.com/Priyasad010",
+            "https://www.linkedin.com/in/lasitha-priyasad-3184732ab"
+        ]
+    }
+    </script>
     <link rel="canonical" href="https://priyasad010.github.io/My_portfolio/">
 
     <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' rx='20' fill='%23081b29'/%3E%3Ctext x='50' y='68' font-size='56' font-family='Arial' font-weight='700' text-anchor='middle' fill='%2300abf0'%3EL%3C/text%3E%3C/svg%3E">
@@ -60,6 +85,7 @@
         </nav>
 
         <div class="header-actions">
+            <button id="palette-btn" aria-label="Search the site (Ctrl+K)" title="Search (Ctrl+K)"><i class='bx bx-search'></i></button>
             <button id="theme-toggle" aria-label="Toggle dark / light theme" title="Toggle theme"><i class='bx bx-sun'></i></button>
             <button class="bx bx-menu" id="menu-icon" aria-label="Open menu"></button>
         </div>
@@ -84,7 +110,7 @@
 
         <div class="home-img">
             <div class="img-border">
-                <img src="images/profile.webp" width="262" height="311" fetchpriority="high" alt="Lasitha Priyasad profile photo">
+                <img src="images/profile.webp" width="786" height="933" fetchpriority="high" alt="Lasitha Priyasad profile photo">
             </div>
         </div>
 
@@ -102,7 +128,7 @@
 
         <div class="about-img">
             <div class="img-border">
-                <img src="images/profile.webp" width="262" height="311" alt="About Lasitha" loading="lazy">
+                <img src="images/profile.webp" width="786" height="933" alt="About Lasitha" loading="lazy">
             </div>
             <span class="circle-spin"></span>
         </div>
@@ -298,6 +324,19 @@
             <figcaption id="lb-caption"></figcaption>
         </figure>
         <button class="lb-nav lb-next" aria-label="Next image"><i class='bx bx-chevron-right'></i></button>
+    </div>
+
+    <!-- Command palette -->
+    <div id="palette" class="overlay palette" hidden>
+        <div class="palette-box" role="dialog" aria-modal="true" aria-label="Search the site">
+            <div class="palette-input">
+                <i class='bx bx-search'></i>
+                <input id="palette-search" type="text" placeholder="Search sections, projects, links..." autocomplete="off" spellcheck="false" role="combobox" aria-expanded="true" aria-controls="palette-list" aria-autocomplete="list" aria-label="Search the site">
+                <kbd>Esc</kbd>
+            </div>
+            <ul id="palette-list" role="listbox" aria-label="Results"></ul>
+            <p class="palette-foot"><kbd>&uarr;</kbd><kbd>&darr;</kbd> to move <kbd>Enter</kbd> to open</p>
+        </div>
     </div>
 
     <script src="js/script.js"></script>

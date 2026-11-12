@@ -1,0 +1,21 @@
+name: Lighthouse CI
+
+# Measures the site with Lighthouse on every push / pull request and warns
+# if a score drops below the limits in lighthouserc.json (90 / 95 / 90 / 95).
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+jobs:
+  lighthouse:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Run Lighthouse CI
+        uses: treosh/lighthouse-ci-action@v12
+        with:
+          configPath: ./lighthouserc.json
+          uploadArtifacts: true
+          temporaryPublicStorage: true

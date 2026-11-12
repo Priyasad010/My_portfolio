@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://priyasad010.github.io/My_portfolio/sitemap.xml

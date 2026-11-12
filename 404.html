@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="robots" content="noindex">
+    <title>Page not found - Lasitha Priyasad</title>
+    <meta name="theme-color" content="#081b29">
+
+    <script>
+        (function () {
+            try {
+                var t = localStorage.getItem('theme');
+                if (t) document.documentElement.setAttribute('data-theme', t);
+            } catch (e) {}
+        })();
+    </script>
+
+    <!-- GitHub Pages serves this file for any missing URL, so assets use absolute paths -->
+    <link rel="preload" href="/My_portfolio/fonts/poppins-600.woff2" as="font" type="font/woff2" crossorigin>
+    <link rel="stylesheet" href="/My_portfolio/css/style.css">
+    <style>
+        .nf {
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            gap: 1.6rem;
+            padding: 4rem 2rem;
+            text-align: center;
+            background: var(--bg-color);
+        }
+
+        .nf .code {
+            font-size: 14rem;
+            font-weight: 700;
+            line-height: 1;
+            color: var(--main-color);
+            text-shadow: 0 0 4rem var(--glow);
+        }
+
+        .nf h1 { font-size: 3.2rem; }
+        .nf p { font-size: 1.7rem; max-width: 46rem; opacity: .85; }
+        .nf .btn-box { margin-top: 1.6rem; max-width: 26rem; }
+        @media (max-width: 600px) { .nf .code { font-size: 10rem; } .nf h1 { font-size: 2.4rem; } }
+    </style>
+</head>
+
+<body>
+    <main class="nf">
+        <div class="code" aria-hidden="true">404</div>
+        <h1>This page could not be found</h1>
+        <p>The link may be broken or the page may have moved. You can head back to the portfolio.</p>
+        <div class="btn-box">
+            <a href="/My_portfolio/" class="btn">Back to portfolio</a>
+        </div>
+    </main>
+</body>
+
+</html>
