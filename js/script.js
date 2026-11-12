@@ -294,7 +294,8 @@ const projects = {
             'Built the AI / computer vision features with Python, FastAPI, YOLOv8, OpenCV, dlib and MediaPipe, alongside the React and Node.js / PostgreSQL system.'
         ],
         outcome: 'Delivered as the IIT 372-2 group project for Thusitha Institute, covering design, implementation, testing and cloud deployment (Vercel, Render, Neon, Cloudinary).',
-        links: [],
+        repo: 'Smart-Class-Management-System',
+        links: [['Source code on GitHub', 'https://github.com/Priyasad010/Smart-Class-Management-System', 'bxl-github']],
         shotsDir: 'images/projects/smart-class',
         shots: ['1.jpg', '2.jpg', '3.jpg', '4.jpg', '5.jpg', '6.jpg', '7.jpg', '8.jpg'],
         captions: [
@@ -445,39 +446,53 @@ document.addEventListener('keydown', e => {
     }
 });
 
+/* ---------- More from GitHub (auto-synced repositories tagged "portfolio") ---------- */
+const featuredRepos = new Set(Object.values(projects).map(p => p.repo).filter(Boolean));
+const syncedRepos = (window.REPOS || []).filter(r => !featuredRepos.has(r.name));
+const isWebUrl = u => typeof u === 'string' && (u.startsWith('https://') || u.startsWith('http://'));
+
+if (syncedRepos.length) {
+    $('#repo-grid').innerHTML = syncedRepos.map(r => {
+        const title = r.name.split('-').join(' ').split('_').join(' ');
+        const chips = [r.language, ...(r.topics || []).slice(0, 3)].filter(Boolean);
+        const updated = r.updated ? new Date(r.updated).toLocaleDateString('en-GB', { month: 'short', year: 'numeric' }) : '';
+        return `<article class="repo-card reveal">
+            <h4><i class='bx bxl-github'></i> ${esc(title)}</h4>
+            <p>${esc(r.description || 'No description yet.')}</p>
+            ${chips.length ? `<div class="tags">${chips.map(c => `<span>${esc(c)}</span>`).join('')}</div>` : ''}
+            <div class="repo-meta">${r.stars ? `<span>\u2605 ${r.stars}</span>` : ''}${updated ? `<span>Updated ${esc(updated)}</span>` : ''}</div>
+            <div class="project-links">
+                ${isWebUrl(r.url) ? `<a href="${esc(r.url)}" target="_blank" rel="noopener"><i class='bx bxl-github'></i> Code</a>` : ''}
+                ${isWebUrl(r.homepage) ? `<a href="${esc(r.homepage)}" target="_blank" rel="noopener"><i class='bx bx-link-external'></i> Live demo</a>` : ''}
+            </div>
+        </article>`;
+    }).join('');
+    $('#github-projects').hidden = false;
+}
+
 /* ---------- Certificates ---------- */
-const certs = [
-    ['azure-basics', 'Introduction to the Basics of Azure Services', 'Microsoft Learning via Simplilearn SkillUP', '22 Oct 2026'],
-    ['pmp-basics', 'PMP Basics', 'Simplilearn SkillUP', '21 Oct 2026'],
-    ['business-analytics-with-excel', 'Business Analytics with Excel', 'Microsoft Learning via Simplilearn SkillUP', '8 Jan 2026'],
-    ['web-development-internship', 'Web Development Intern - Offer Letter', 'SaiKet Systems', '3 Jan 2026'],
-    ['deepseek-for-beginners', 'DeepSeek for Beginners', 'Simplilearn SkillUP', '2 Jan 2026'],
-    ['python-for-beginners', 'Python for Beginners', 'CODL, University of Moratuwa', '2 Jan 2026'],
-    ['ai-ml-engineer-stage-1', 'AI/ML Engineer - Stage 1', 'SLIIT, Faculty of Computing', '23 Nov 2025'],
-    ['creative-design-workshop-oct-2025', 'Creative Design Workshop (Season 22)', 'Southern IRAA', '25-27 Oct 2025'],
-    ['creative-design-workshop-may-2025', 'Creative Design Workshop (Season 20)', 'Southern IRAA', '23-24 May 2025'],
-    ['web-design-for-beginners', 'Web Design for Beginners', 'CODL, University of Moratuwa', '2025'],
-    ['front-end-web-development', 'Front-End Web Development', 'CODL, University of Moratuwa', '2024 - 2025'],
-    ['python-workshop-2024', 'Programming with Python Workshop (Season 09)', 'Southern IRAA', '7-8 Aug 2024']
-];
+// The list lives in data/certificates.js (instructions at the top of that file).
+const certs = (window.CERTIFICATES || []).map(c => ({ ...c, base: c.file.slice(0, c.file.lastIndexOf('.')) }));
+const certCountEl = $('#cert-count');
+if (certCountEl) certCountEl.dataset.target = certs.length;
 
 const CERT_VISIBLE = 6;
 const certGrid = $('#cert-grid');
 const certToggle = $('#cert-toggle');
 let certsExpanded = false;
 
-certGrid.innerHTML = certs.map(([slug, title, issuer, date], i) => `
+certGrid.innerHTML = certs.map((c, i) => `
     <article class="cert-card has-img${i >= CERT_VISIBLE ? ' cert-extra' : ''}" data-i="${i}">
-        <button type="button" class="cert-thumb" aria-label="View certificate: ${esc(title)}"><i class='bx bx-award'></i><img src="images/certificates/thumbs/${slug}.webp" alt="${esc(title)} certificate" width="600" height="424" loading="lazy" onerror="this.remove()"></button>
+        <button type="button" class="cert-thumb" aria-label="View certificate: ${esc(c.title)}"><i class='bx bx-award'></i><img src="images/certificates/thumbs/${esc(c.base)}.webp" alt="${esc(c.title)} certificate" width="600" height="424" loading="lazy" onerror="this.onerror=null;this.src='images/certificates/${esc(c.file)}'"></button>
         <div class="cert-body">
-            <h3>${esc(title)}</h3>
-            <p>${esc(issuer)}</p>
-            <span class="cert-year">${esc(date)}</span>
+            <h3>${esc(c.title)}</h3>
+            <p>${esc(c.issuer)}</p>
+            <span class="cert-year">${esc(c.date)}</span>
         </div>
     </article>`).join('');
 
-// Grid shows small WebP thumbnails; the lightbox opens the full-size JPG.
-const certItems = certs.map(([slug, title]) => ({ src: `images/certificates/${slug}.jpg`, caption: title }));
+// The grid shows small WebP thumbnails (made automatically); the lightbox opens the full-size image.
+const certItems = certs.map(c => ({ src: `images/certificates/${c.file}`, caption: c.title }));
 $$('.cert-card', certGrid).forEach(card => {
     card.addEventListener('click', () => openLightbox(certItems, +card.dataset.i));
 });
@@ -501,7 +516,7 @@ $('.cert-more').after(certHint);
 updateCertToggle();
 
 /* ---------- Scroll reveal, skill bars, counters ---------- */
-$$('.about-content, .about-img, .education-content, .skill-group, .skill-extra, .project-card, .cert-card, .contact form, .stat')
+$$('.about-content, .about-img, .education-content, .skill-group, .skill-extra, .project-card, .repo-card, .cert-card, .contact form, .stat')
     .forEach(el => el.classList.add('reveal'));
 
 function animateCount(el) {

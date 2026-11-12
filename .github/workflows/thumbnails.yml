@@ -1,0 +1,56 @@
+name: Certificate thumbnails
+
+# When a new certificate image is uploaded to images/certificates/, this creates its
+# small WebP thumbnail (images/certificates/thumbs/) so the page stays fast.
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'images/certificates/*'
+      - 'scripts/make-thumbs.mjs'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+  pages: write
+
+concurrency:
+  group: thumbnails
+  cancel-in-progress: false
+
+jobs:
+  thumbnails:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+
+      - name: Install image tool
+        run: npm install --no-save sharp
+
+      - name: Create missing thumbnails
+        run: node scripts/make-thumbs.mjs
+
+      - name: Commit new thumbnails
+        id: commit
+        run: |
+          git add images/certificates/thumbs
+          if ! git diff --cached --quiet; then
+            git config user.name "github-actions[bot]"
+            git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+            git commit -m "chore: add certificate thumbnails"
+            git pull --rebase origin main
+            git push origin HEAD:main
+            echo "changed=true" >> "$GITHUB_OUTPUT"
+          fi
+
+      - name: Rebuild GitHub Pages
+        if: steps.commit.outputs.changed == 'true'
+        run: |
+          curl -sS -X POST \
+            -H "Authorization: Bearer ${{ secrets.GITHUB_TOKEN }}" \
+            -H "Accept: application/vnd.github+json" \
+            "https://api.github.com/repos/${{ github.repository }}/pages/builds"

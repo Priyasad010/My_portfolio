@@ -140,7 +140,7 @@
             <div class="stats">
                 <div class="stat"><h4><span class="count" data-target="1">0</span>+</h4><p>Year Experience</p></div>
                 <div class="stat"><h4><span class="count" data-target="2">0</span></h4><p>Major Projects</p></div>
-                <div class="stat"><h4><span class="count" data-target="12">0</span>+</h4><p>Certificates &amp; Courses</p></div>
+                <div class="stat"><h4><span class="count" id="cert-count" data-target="12">0</span>+</h4><p>Certificates &amp; Courses</p></div>
             </div>
 
             <div class="btn-box btns">
@@ -244,6 +244,12 @@
                 </div>
             </article>
         </div>
+    
+        <div class="github-projects" id="github-projects" hidden>
+            <h3 class="sub-heading">More from GitHub</h3>
+            <p class="sub-note">Updated automatically from my public repositories.</p>
+            <div class="repo-grid" id="repo-grid"></div>
+        </div>
     </section>
 
     <!-- CERTIFICATES -->
@@ -339,6 +345,8 @@
         </div>
     </div>
 
+    <script src="data/certificates.js"></script>
+    <script src="data/repos.js"></script>
     <script src="js/script.js"></script>
 </body>
 

@@ -1756,3 +1756,68 @@ kbd {
 .bx-download:before{content:"\eab9"}
 .bx-sitemap:before{content:"\ec10"}
 .bx-subdirectory-left:before{content:"\ec32"}
+
+
+/* ---------- More from GitHub ---------- */
+.github-projects {
+    max-width: 120rem;
+    margin: 6rem auto 0;
+}
+
+.github-projects[hidden] { display: none; }
+
+.sub-heading {
+    text-align: center;
+    font-size: 3rem;
+    color: var(--main-color);
+}
+
+.sub-note {
+    margin: .6rem 0 3rem;
+    text-align: center;
+    font-size: 1.4rem;
+    opacity: .7;
+}
+
+.repo-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(28rem, 1fr));
+    gap: 2.4rem;
+}
+
+.repo-card {
+    display: flex;
+    flex-direction: column;
+    padding: 2.2rem;
+    border: .2rem solid var(--main-color);
+    border-radius: 1.2rem;
+    background: var(--card-bg);
+    transition: transform .4s, box-shadow .4s;
+}
+
+.repo-card:hover {
+    transform: translateY(-.6rem);
+    box-shadow: 0 1rem 3rem var(--glow);
+}
+
+.repo-card h4 {
+    display: flex;
+    align-items: center;
+    gap: .8rem;
+    margin-bottom: .8rem;
+    font-size: 2rem;
+    text-transform: capitalize;
+}
+
+.repo-card h4 i { font-size: 2.4rem; color: var(--main-color); }
+.repo-card p { margin-bottom: 1.2rem; font-size: 1.5rem; line-height: 1.6; }
+
+.repo-meta {
+    display: flex;
+    gap: 1.6rem;
+    margin-bottom: 1.2rem;
+    font-size: 1.3rem;
+    opacity: .75;
+}
+
+.repo-card .project-links { margin-top: auto; flex-wrap: wrap; }
