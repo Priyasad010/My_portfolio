@@ -143,23 +143,28 @@ if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
     type();
 }
 
-/* ---------- Tech logo grid ---------- */
+/* ---------- Skills: grouped technologies (no percentages) ---------- */
 const DEVICON = 'https://cdn.jsdelivr.net/gh/devicons/devicon@v2.16.0/icons';
-const techs = [
-    ['HTML5', 'html5/html5-original'], ['CSS3', 'css3/css3-original'],
-    ['JavaScript', 'javascript/javascript-original'], ['TypeScript', 'typescript/typescript-original'],
-    ['React', 'react/react-original'], ['Next.js', 'nextjs/nextjs-original'],
-    ['Tailwind CSS', 'tailwindcss/tailwindcss-original'], ['Node.js', 'nodejs/nodejs-original'],
-    ['Express', 'express/express-original'], ['PostgreSQL', 'postgresql/postgresql-original'],
-    ['Prisma', 'prisma/prisma-original'], ['Python', 'python/python-original'],
-    ['FastAPI', 'fastapi/fastapi-original'], ['OpenCV', 'opencv/opencv-original'],
-    ['Kotlin', 'kotlin/kotlin-original'], ['Android', 'android/android-original'],
-    ['Git', 'git/git-original'], ['GitHub', 'github/github-original'],
-    ['Vercel', 'vercel/vercel-original'], ['Figma', 'figma/figma-original']
+const skillGroups = [
+    ['Frontend', 'bx-layout', [
+        ['HTML5', 'html5/html5-original'], ['CSS3', 'css3/css3-original'], ['JavaScript', 'javascript/javascript-original'],
+        ['TypeScript', 'typescript/typescript-original'], ['React', 'react/react-original'], ['Next.js', 'nextjs/nextjs-original'],
+        ['Tailwind CSS', 'tailwindcss/tailwindcss-original']]],
+    ['Backend & Database', 'bx-server', [
+        ['Node.js', 'nodejs/nodejs-original'], ['Express', 'express/express-original'],
+        ['PostgreSQL', 'postgresql/postgresql-original'], ['Prisma', 'prisma/prisma-original']]],
+    ['AI & Mobile', 'bx-chip', [
+        ['Python', 'python/python-original'], ['FastAPI', 'fastapi/fastapi-original'], ['OpenCV', 'opencv/opencv-original'],
+        ['Kotlin', 'kotlin/kotlin-original'], ['Android', 'android/android-original']]],
+    ['Tools & Cloud', 'bx-cloud', [
+        ['Git', 'git/git-original'], ['GitHub', 'github/github-original'], ['Vercel', 'vercel/vercel-original'], ['Figma', 'figma/figma-original']]]
 ];
-$('#tech-grid').innerHTML = techs.map(([name, path]) =>
-    `<div class="tech reveal"><img src="${DEVICON}/${path}.svg" alt="${esc(name)} logo" loading="lazy" onerror="this.remove()"><span>${esc(name)}</span></div>`
-).join('');
+$('#skill-groups').innerHTML = skillGroups.map(([title, icon, items]) => `
+    <div class="skill-group">
+        <h3><i class='bx ${icon}'></i> ${esc(title)}</h3>
+        <div class="tech-row">${items.map(([name, path]) =>
+            `<div class="tech"><img src="${DEVICON}/${path}.svg" alt="${esc(name)} logo" loading="lazy" onerror="this.remove()"><span>${esc(name)}</span></div>`).join('')}</div>
+    </div>`).join('');
 
 /* ---------- Lightbox ---------- */
 const lightbox = $('#lightbox');
@@ -446,7 +451,7 @@ $('.cert-more').after(certHint);
 updateCertToggle();
 
 /* ---------- Scroll reveal, skill bars, counters ---------- */
-$$('.about-content, .about-img, .education-content, .skills-column, .project-card, .cert-card, .contact form, .stat, .tech-title')
+$$('.about-content, .about-img, .education-content, .skill-group, .skill-extra, .project-card, .cert-card, .contact form, .stat')
     .forEach(el => el.classList.add('reveal'));
 
 function animateCount(el) {
@@ -472,6 +477,31 @@ const observer = new IntersectionObserver((entries, obs) => {
 }, { threshold: 0.15 });
 
 $$('.reveal').forEach(el => observer.observe(el));
+
+/* ---------- Email (assembled in JS so scrapers do not harvest it) ---------- */
+const emailLink = $('#email-text');
+const emailAddr = `${emailLink.dataset.user}@${emailLink.dataset.domain}`;
+emailLink.textContent = emailAddr;
+emailLink.href = `mailto:${emailAddr}`;
+$$('[data-mail]').forEach(a => { a.href = `mailto:${emailAddr}`; });
+
+$('#copy-email').addEventListener('click', async () => {
+    const status = $('#copy-status');
+    try {
+        await navigator.clipboard.writeText(emailAddr);
+        status.textContent = 'Email address copied!';
+    } catch (e) {
+        const ta = document.createElement('textarea');
+        ta.value = emailAddr;
+        document.body.appendChild(ta);
+        ta.select();
+        let ok = false;
+        try { ok = document.execCommand('copy'); } catch (err) {}
+        ta.remove();
+        status.textContent = ok ? 'Email address copied!' : emailAddr;
+    }
+    setTimeout(() => { status.textContent = ''; }, 2500);
+});
 
 /* ---------- Contact form (AJAX via Formspree) ---------- */
 const form = $('#contact-form');
