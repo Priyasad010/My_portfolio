@@ -1,3 +1,47 @@
+/* ---------- Self-hosted fonts (no third-party requests, font-display: swap) ---------- */
+@font-face { font-family: 'Poppins'; font-style: normal; font-weight: 400; font-display: swap; src: url('../fonts/poppins-400.woff2') format('woff2'); }
+@font-face { font-family: 'Poppins'; font-style: normal; font-weight: 500; font-display: swap; src: url('../fonts/poppins-500.woff2') format('woff2'); }
+@font-face { font-family: 'Poppins'; font-style: normal; font-weight: 600; font-display: swap; src: url('../fonts/poppins-600.woff2') format('woff2'); }
+@font-face { font-family: 'Poppins'; font-style: normal; font-weight: 700; font-display: swap; src: url('../fonts/poppins-700.woff2') format('woff2'); }
+@font-face { font-family: 'boxicons'; font-weight: normal; font-style: normal; font-display: swap; src: url('../fonts/boxicons-subset.woff2') format('woff2'); }
+
+/* Boxicons (MIT, https://boxicons.com): base rules + only the icons used on this site */
+.bx, .bxl {
+    font-family: 'boxicons' !important;
+    font-weight: normal;
+    font-style: normal;
+    font-variant: normal;
+    line-height: 1;
+    text-rendering: auto;
+    display: inline-block;
+    text-transform: none;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+.bx-award:before{content:"\e9bf"}
+.bx-car:before{content:"\ea27"}
+.bx-chevron-left:before{content:"\ea4d"}
+.bx-chevron-right:before{content:"\ea50"}
+.bx-chip:before{content:"\ea5a"}
+.bx-cloud:before{content:"\ea60"}
+.bx-copy:before{content:"\ea84"}
+.bx-envelope:before{content:"\eac1"}
+.bx-layout:before{content:"\eb31"}
+.bx-link-external:before{content:"\eb3e"}
+.bx-menu:before{content:"\eb5f"}
+.bx-moon:before{content:"\eb94"}
+.bx-qr-scan:before{content:"\ebcf"}
+.bx-right-arrow-alt:before{content:"\ebe6"}
+.bx-server:before{content:"\ebfd"}
+.bx-sun:before{content:"\ec34"}
+.bx-up-arrow-alt:before{content:"\ec5d"}
+.bx-x:before{content:"\ec8d"}
+.bxl-android:before{content:"\e90e"}
+.bxl-github:before{content:"\e93a"}
+.bxl-linkedin:before{content:"\e94d"}
+.bxl-whatsapp:before{content:"\e98a"}
+
+
 * {
     margin: 0;
     padding: 0;
@@ -5,7 +49,7 @@
     text-decoration: none;
     border: none;
     outline: none;
-    font-family: 'Poppins', sans-serif;
+    font-family: 'Poppins', system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
 }
 
 :root {
@@ -43,45 +87,7 @@ body {
     outline-offset: .3rem;
 }
 
-/* ---------- Preloader / progress ---------- */
-#preloader {
-    position: fixed;
-    inset: 0;
-    background: var(--bg-color);
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    z-index: 9999;
-    transition: opacity .5s, visibility .5s;
-}
-
-/* CSS-only safety net: even if JS fails, the preloader disappears after 5s */
-#preloader {
-    animation: preloader-autohide .5s 5s forwards;
-}
-
-@keyframes preloader-autohide {
-    to { opacity: 0; visibility: hidden; }
-}
-
-#preloader.hide {
-    opacity: 0;
-    visibility: hidden;
-}
-
-.loader {
-    width: 5rem;
-    height: 5rem;
-    border: .5rem solid var(--second-bg-color);
-    border-top-color: var(--main-color);
-    border-radius: 50%;
-    animation: spin 1s linear infinite;
-}
-
-@keyframes spin {
-    to { transform: rotate(360deg); }
-}
-
+/* ---------- Scroll progress ---------- */
 #scroll-progress {
     position: fixed;
     top: 0;
@@ -289,7 +295,7 @@ section {
     line-height: 1.3;
 }
 
-.text-animate h3 {
+.text-animate .role {
     font-size: 3.2rem;
     font-weight: 700;
     min-height: 4.8rem;
@@ -1524,4 +1530,25 @@ section {
     margin: 1rem 0 0;
     font-size: 1.4rem;
     color: #2ecc71;
+}
+
+
+/* ---------- Performance / accessibility follow-ups ---------- */
+.card-more {
+    background: transparent;
+    border: 0;
+    padding: 1rem 0 0;
+    cursor: pointer;
+    font-family: inherit;
+}
+
+.card-more:focus-visible { outline: .2rem solid var(--main-color); outline-offset: .4rem; border-radius: .4rem; }
+
+button.cert-thumb {
+    width: 100%;
+    padding: 0;
+    border: 0;
+    cursor: zoom-in;
+    font-size: 6.5rem;
+    font-family: inherit;
 }

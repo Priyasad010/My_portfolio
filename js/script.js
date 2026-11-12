@@ -3,27 +3,6 @@ const $ = (sel, root = document) => root.querySelector(sel);
 const $$ = (sel, root = document) => [...root.querySelectorAll(sel)];
 const esc = s => String(s).replace(/[&<>"]/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));
 
-/* ---------- Image loader (tries png/jpg/jpeg/webp, resolves null if missing) ---------- */
-const EXTS = ['png', 'jpg', 'jpeg', 'webp'];
-const imgCache = new Map();
-function tryLoad(base) {
-    if (imgCache.has(base)) return imgCache.get(base);
-    const p = new Promise(resolve => {
-        let i = 0;
-        const next = () => {
-            if (i >= EXTS.length) return resolve(null);
-            const src = `${base}.${EXTS[i++]}`;
-            const img = new Image();
-            img.onload = () => resolve(src);
-            img.onerror = next;
-            img.src = src;
-        };
-        next();
-    });
-    imgCache.set(base, p);
-    return p;
-}
-
 /* ---------- UI text ---------- */
 const en = {
     'form.sending': 'Sending...',
@@ -45,12 +24,6 @@ const en = {
 const t = key => en[key] || key;
 
 $('#year').textContent = new Date().getFullYear();
-
-/* ---------- Preloader ---------- */
-const preloader = $('#preloader');
-const hidePreloader = () => preloader && preloader.classList.add('hide');
-window.addEventListener('load', () => setTimeout(hidePreloader, 300));
-setTimeout(hidePreloader, 4000); // safety net
 
 /* ---------- Mobile menu ---------- */
 const menuIcon = $('#menu-icon');
@@ -95,23 +68,41 @@ const navLinks = $$('.navbar a');
 const progressBar = $('#scroll-progress');
 const backToTop = $('#back-to-top');
 
-function onScroll() {
+// Layout measurements are cached and only refreshed when the page size changes,
+// so scrolling never forces the browser to recalculate layout.
+let sectionTops = [], maxScroll = 0, ticking = false;
+
+function measure() {
+    sectionTops = sections.map(sec => sec.offsetTop);
+    maxScroll = document.documentElement.scrollHeight - window.innerHeight;
+}
+
+function update() {
+    ticking = false;
     const y = window.scrollY;
-    const docH = document.documentElement.scrollHeight - window.innerHeight;
 
     header.classList.toggle('sticky', y > 50);
-    progressBar.style.width = (docH > 0 ? (y / docH) * 100 : 0) + '%';
+    progressBar.style.width = (maxScroll > 0 ? (y / maxScroll) * 100 : 0) + '%';
     backToTop.classList.toggle('show', y > 500);
 
     let current = sections[0].id;
-    sections.forEach(sec => {
-        if (y >= sec.offsetTop - 150) current = sec.id;
+    sectionTops.forEach((top, i) => {
+        if (y >= top - 150) current = sections[i].id;
     });
     navLinks.forEach(a => a.classList.toggle('active', a.getAttribute('href') === '#' + current));
 }
 
+function onScroll() {
+    if (!ticking) {
+        ticking = true;
+        requestAnimationFrame(update);
+    }
+}
+
 window.addEventListener('scroll', onScroll, { passive: true });
-onScroll();
+// ResizeObserver callbacks run after layout, so reading sizes here is free.
+new ResizeObserver(() => { measure(); onScroll(); }).observe(document.body);
+window.addEventListener('resize', () => { measure(); onScroll(); });
 
 backToTop.addEventListener('click', () => window.scrollTo({ top: 0, behavior: 'smooth' }));
 
@@ -244,7 +235,8 @@ const projects = {
         ],
         outcome: 'Delivered as the IIT 372-2 group project for Thusitha Institute, covering design, implementation, testing and cloud deployment (Vercel, Render, Neon, Cloudinary).',
         links: [],
-        shots: 'images/projects/smart-class',
+        shotsDir: 'images/projects/smart-class',
+        shots: ['1.jpg', '2.jpg', '3.jpg', '4.jpg', '5.jpg', '6.jpg', '7.jpg', '8.jpg'],
         captions: [
             'Public institute website (Sinhala, teacher showcase)',
             'Admin dashboard: students, users, monthly income and quick actions',
@@ -298,7 +290,8 @@ const projects = {
             ['Download APK', 'https://rideprofit-api.vercel.app/downloads/rideprofit.apk', 'bxl-android']
         ],
         note: 'Independent project, not affiliated with PickMe or Uber.',
-        shots: 'images/projects/rideprofit'
+        shotsDir: 'images/projects/rideprofit',
+        shots: [] // add file names here (e.g. '1.jpg') once the screenshots are in images/projects/rideprofit/
     }
 };
 
@@ -306,22 +299,25 @@ const modal = $('#project-modal');
 const modalContent = $('#modal-content');
 let modalReturnFocus = null;
 
-async function loadShots(basePath) {
-    const found = await Promise.all(Array.from({ length: 8 }, (_, i) => tryLoad(`${basePath}/${i + 1}`)));
-    return found.map((src, i) => src && { src, n: i + 1 }).filter(Boolean);
-}
-
-async function openProject(id) {
+function openProject(id) {
     const p = projects[id];
     if (!p) return;
     modalReturnFocus = document.activeElement;
 
     const list = arr => `<ul class="modal-list">${arr.map(x => `<li>${esc(x)}</li>`).join('')}</ul>`;
+    const items = p.shots.map((file, i) => ({
+        src: `${p.shotsDir}/${file}`,
+        caption: (p.captions && p.captions[i]) || `${p.title} - ${i + 1}`
+    }));
+    const shotsHtml = items.length
+        ? `<h4>${esc(t('m.shots'))}</h4><div class="gallery">${items.map((it, i) =>
+            `<button type="button" class="gallery-item" data-i="${i}" title="${esc(it.caption)}" aria-label="Open screenshot: ${esc(it.caption)}"><img src="${esc(it.src)}" alt="${esc(it.caption)}" loading="lazy"></button>`).join('')}</div>`
+        : `<p class="modal-empty">${esc(t('m.noshots'))}</p>`;
     modalContent.innerHTML = `
         <h3 id="modal-title">${esc(p.title)}</h3>
         <p class="project-meta">${esc(p.meta)}</p>
         <p class="modal-text">${esc(p.overview)}</p>
-        <div class="modal-shots" id="modal-shots"><p class="modal-empty">${esc(t('m.noshots'))}</p></div>
+        <div class="modal-shots" id="modal-shots">${shotsHtml}</div>
         ${p.problem ? `<div class="case-study">
             <h4>${esc(t('m.problem'))}</h4><p class="modal-text">${esc(p.problem)}</p>
             <h4>${esc(t('m.approach'))}</h4>${list(p.approach)}
@@ -344,13 +340,7 @@ async function openProject(id) {
     $('.overlay-close', modal).focus();
     $('.modal-box', modal).scrollTop = 0;
 
-    const shots = await loadShots(p.shots);
-    const box = $('#modal-shots');
-    if (!box || modal.hidden || !shots.length) return;
-    const items = shots.map(({ src, n }) => ({ src, caption: (p.captions && p.captions[n - 1]) || `${p.title} - ${n}` }));
-    box.innerHTML = `<h4>${esc(t('m.shots'))}</h4><div class="gallery">${items.map((it, i) =>
-        `<button class="gallery-item" data-i="${i}" title="${esc(it.caption)}" aria-label="Open screenshot: ${esc(it.caption)}"><img src="${esc(it.src)}" alt="${esc(it.caption)}" loading="lazy"></button>`).join('')}</div>`;
-    $$('.gallery-item', box).forEach(b => b.addEventListener('click', () => openLightbox(items, +b.dataset.i)));
+    $$('.gallery-item', modalContent).forEach(b => b.addEventListener('click', () => openLightbox(items, +b.dataset.i)));
 }
 
 function closeModal() {
@@ -363,23 +353,9 @@ modal.addEventListener('click', e => {
     if (e.target === modal || e.target.closest('[data-close]')) closeModal();
 });
 
+// Whole card is clickable with the mouse; keyboard users use the real "View Details" button inside it.
 $$('.project-card').forEach(card => {
-    const open = () => openProject(card.dataset.project);
-    card.addEventListener('click', open);
-    card.addEventListener('keydown', e => {
-        if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); open(); }
-    });
-    // Use the first available screenshot as the card thumbnail
-    const base = `images/projects/${card.dataset.project}`;
-    Promise.all([tryLoad(`${base}/cover`), tryLoad(`${base}/1`)]).then(([cover, first]) => {
-        const src = cover || first;
-        if (src) {
-            const img = document.createElement('img');
-            img.src = src;
-            img.alt = `${card.querySelector('h3').textContent} preview`;
-            $('.project-thumb', card).appendChild(img);
-        }
-    });
+    card.addEventListener('click', () => openProject(card.dataset.project));
 });
 
 document.addEventListener('keydown', e => {
@@ -414,8 +390,8 @@ const certToggle = $('#cert-toggle');
 let certsExpanded = false;
 
 certGrid.innerHTML = certs.map(([slug, title, issuer, date], i) => `
-    <article class="cert-card has-img${i >= CERT_VISIBLE ? ' cert-extra' : ''}" data-i="${i}" tabindex="0" role="button" aria-label="View certificate: ${esc(title)}">
-        <div class="cert-thumb"><i class='bx bx-award'></i><img src="images/certificates/${slug}.jpg" alt="${esc(title)} certificate" loading="lazy" onerror="this.remove()"></div>
+    <article class="cert-card has-img${i >= CERT_VISIBLE ? ' cert-extra' : ''}" data-i="${i}">
+        <button type="button" class="cert-thumb" aria-label="View certificate: ${esc(title)}"><i class='bx bx-award'></i><img src="images/certificates/thumbs/${slug}.webp" alt="${esc(title)} certificate" width="600" height="424" loading="lazy" onerror="this.remove()"></button>
         <div class="cert-body">
             <h3>${esc(title)}</h3>
             <p>${esc(issuer)}</p>
@@ -423,13 +399,10 @@ certGrid.innerHTML = certs.map(([slug, title, issuer, date], i) => `
         </div>
     </article>`).join('');
 
+// Grid shows small WebP thumbnails; the lightbox opens the full-size JPG.
 const certItems = certs.map(([slug, title]) => ({ src: `images/certificates/${slug}.jpg`, caption: title }));
 $$('.cert-card', certGrid).forEach(card => {
-    const open = () => openLightbox(certItems, +card.dataset.i);
-    card.addEventListener('click', open);
-    card.addEventListener('keydown', e => {
-        if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); open(); }
-    });
+    card.addEventListener('click', () => openLightbox(certItems, +card.dataset.i));
 });
 
 function updateCertToggle() {

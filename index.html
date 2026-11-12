@@ -33,19 +33,16 @@
         })();
     </script>
 
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
-    <link href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css" rel="stylesheet">
+    <link rel="preload" href="fonts/poppins-400.woff2" as="font" type="font/woff2" crossorigin>
+    <link rel="preload" href="fonts/poppins-600.woff2" as="font" type="font/woff2" crossorigin>
+    <link rel="preload" href="fonts/boxicons-subset.woff2" as="font" type="font/woff2" crossorigin>
+    <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
     <link rel="stylesheet" href="css/style.css">
 </head>
 
 <body>
 
     <a href="#about" class="skip-link">Skip to content</a>
-
-    <!-- Preloader -->
-    <div id="preloader"><div class="loader"></div></div>
 
     <!-- Scroll progress bar -->
     <div id="scroll-progress"></div>
@@ -76,7 +73,7 @@
             <span class="availability"><i></i> Open to internship opportunities</span>
             <h1>Hi, I'm <span>Lasitha Priyasad</span></h1>
             <div class="text-animate">
-                <h3><span class="typing" id="typing"></span></h3>
+                <h2 class="role"><span class="typing" id="typing"></span></h2>
             </div>
             <p>Full-stack developer who builds web and Android products, from RideProfit, a profit-per-km overlay for ride-hailing drivers, to a smart class management system with AI-assisted attendance. Computer Science undergraduate at Uva Wellassa University of Sri Lanka.</p>
 
@@ -88,7 +85,7 @@
 
         <div class="home-img">
             <div class="img-border">
-                <img src="images/Untitled-1.png" alt="Lasitha Priyasad profile photo">
+                <img src="images/profile.webp" width="262" height="311" fetchpriority="high" alt="Lasitha Priyasad profile photo">
             </div>
         </div>
 
@@ -106,7 +103,7 @@
 
         <div class="about-img">
             <div class="img-border">
-                <img src="images/Untitled-1.png" alt="About Lasitha" loading="lazy">
+                <img src="images/profile.webp" width="262" height="311" alt="About Lasitha" loading="lazy">
             </div>
             <span class="circle-spin"></span>
         </div>
@@ -194,8 +191,8 @@
         <h2 class="heading">My <span>Projects</span></h2>
 
         <div class="projects-container">
-            <article class="project-card" data-project="smart-class" tabindex="0" role="button" aria-label="Open Smart Class Management System details">
-                <div class="project-thumb"><i class='bx bx-qr-scan'></i></div>
+            <article class="project-card" data-project="smart-class">
+                <div class="project-thumb"><i class='bx bx-qr-scan'></i><img src="images/projects/smart-class/cover.webp" alt="Smart Class Management System preview" width="640" height="360" loading="lazy"></div>
                 <div class="project-body">
                     <h3>Smart Class Management System</h3>
                     <p class="project-meta">Group Project &middot; IIT 372-2 Project II &middot; Uva Wellassa University</p>
@@ -204,11 +201,11 @@
                     <div class="tags">
                         <span>React.js</span><span>Node.js</span><span>PostgreSQL</span><span>Python</span><span>YOLOv8</span><span>OpenCV</span>
                     </div>
-                    <span class="card-more"><span>View Details</span> <i class='bx bx-right-arrow-alt'></i></span>
+                    <button type="button" class="card-more" aria-label="View details: Smart Class Management System">View Details <i class='bx bx-right-arrow-alt'></i></button>
                 </div>
             </article>
 
-            <article class="project-card" data-project="rideprofit" tabindex="0" role="button" aria-label="Open RideProfit details">
+            <article class="project-card" data-project="rideprofit">
                 <div class="project-thumb"><i class='bx bx-car'></i></div>
                 <div class="project-body">
                     <h3>RideProfit</h3>
@@ -218,7 +215,7 @@
                     <div class="tags">
                         <span>Kotlin</span><span>Jetpack Compose</span><span>Node.js</span><span>TypeScript</span><span>PostgreSQL</span><span>Next.js</span>
                     </div>
-                    <span class="card-more"><span>View Details</span> <i class='bx bx-right-arrow-alt'></i></span>
+                    <button type="button" class="card-more" aria-label="View details: RideProfit">View Details <i class='bx bx-right-arrow-alt'></i></button>
                 </div>
             </article>
         </div>
