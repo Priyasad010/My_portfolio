@@ -291,7 +291,16 @@ const projects = {
         ],
         note: 'Independent project, not affiliated with PickMe or Uber.',
         shotsDir: 'images/projects/rideprofit',
-        shots: [] // add file names here (e.g. '1.jpg') once the screenshots are in images/projects/rideprofit/
+        portrait: true, // phone screenshots: taller gallery thumbnails
+        shots: ['1.jpg', '2.jpg', '3.jpg', '4.jpg', '5.jpg', '6.jpg'],
+        captions: [
+            'Home: setup checklist, active vehicle and today\'s stats',
+            'Settings: plan, commission rates and language (English, Sinhala, Tamil)',
+            'Settings: fuel prices with automatic Ceypetco updates',
+            'Vehicle profiles, each with its own cost per km and green threshold',
+            'Pro features: weekly summary, big ride alert and daily profit goal',
+            'Upgrade to Pro: what Pro gives you'
+        ]
     }
 };
 
@@ -310,7 +319,7 @@ function openProject(id) {
         caption: (p.captions && p.captions[i]) || `${p.title} - ${i + 1}`
     }));
     const shotsHtml = items.length
-        ? `<h4>${esc(t('m.shots'))}</h4><div class="gallery">${items.map((it, i) =>
+        ? `<h4>${esc(t('m.shots'))}</h4><div class="gallery${p.portrait ? ' portrait' : ''}">${items.map((it, i) =>
             `<button type="button" class="gallery-item" data-i="${i}" title="${esc(it.caption)}" aria-label="Open screenshot: ${esc(it.caption)}"><img src="${esc(it.src)}" alt="${esc(it.caption)}" loading="lazy"></button>`).join('')}</div>`
         : `<p class="modal-empty">${esc(t('m.noshots'))}</p>`;
     modalContent.innerHTML = `

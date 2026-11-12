@@ -1563,3 +1563,7 @@ button.cert-thumb {
 /* hero buttons: wide enough for "Download CV" on one line (desktop + tablet) */
 .btn-box { max-width: 42rem; }
 .btn-box .btn { white-space: nowrap; }
+
+/* phone screenshots (RideProfit): taller, narrower gallery tiles */
+.gallery.portrait { grid-template-columns: repeat(auto-fill, minmax(13rem, 1fr)); }
+.gallery.portrait .gallery-item { height: 27rem; }
