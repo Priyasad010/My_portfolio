@@ -24,12 +24,8 @@ function tryLoad(base) {
     return p;
 }
 
-/* ---------- Language (English / Sinhala) ---------- */
-const en = {};
-$$('[data-i18n]').forEach(el => { en[el.dataset.i18n] = el.innerHTML; });
-$$('[data-i18n-ph]').forEach(el => { en[el.dataset.i18nPh] = el.getAttribute('placeholder'); });
-
-Object.assign(en, {
+/* ---------- UI text ---------- */
+const en = {
     'form.sending': 'Sending...',
     'form.ok': 'Thank you! Your message has been sent.',
     'form.err': 'Oops! Something went wrong. Please try again.',
@@ -45,81 +41,10 @@ Object.assign(en, {
     'cert.hint': 'Click a certificate to view it larger.',
     'cert.more': 'Show all ({n})',
     'cert.less': 'Show less'
-});
-
-const si = {
-    'nav.home': 'මුල් පිටුව',
-    'nav.about': 'මා ගැන',
-    'nav.education': 'අධ්‍යාපනය',
-    'nav.skills': 'කුසලතා',
-    'nav.projects': 'ව්‍යාපෘති',
-    'nav.certs': 'සහතික',
-    'nav.contact': 'සම්බන්ධ වන්න',
-    'hero.hi': 'ආයුබෝවන්, මම <span>Lasitha Priyasad</span>',
-    'hero.p': 'මම නවීන, responsive සහ පරිශීලක-හිතකාමී වෙබ් අඩවි HTML, CSS සහ JavaScript භාවිතයෙන් නිර්මාණය කරන, ඒ ගැන උනන්දුවෙන් සිටින වෙබ් සංවර්ධකයෙක්. පිරිසිදු නිර්මාණය, කාර්යසාධනය සහ භාවිත පහසුව කෙරෙහි අවධානය යොමු කරමින්, නව තාක්ෂණයන් අඛණ්ඩව ඉගෙන ගනිමින් සැබෑ ව්‍යාපෘති ඔස්සේ දියුණු වෙමි.',
-    'hero.hire': 'මා බඳවා ගන්න',
-    'hero.cv': 'CV බාගන්න',
-    'about.h': 'මා <span>ගැන</span>',
-    'about.title': 'වෙබ් සංවර්ධක!',
-    'about.p': 'මම ශ්‍රී ලංකාවේ ඌව වෙල්ලස්ස විශ්වවිද්‍යාලයේ පරිගණක විද්‍යාව සහ තොරතුරු තාක්ෂණය පිළිබඳ උපාධි අපේක්ෂකයෙක් වන අතර, වෙබ් සංවර්ධනය සහ නිර්මාණය කෙරෙහි දැඩි රුචියක් දක්වමි. HTML, CSS සහ JavaScript භාවිතයෙන් නවීන, responsive සහ පරිශීලක-හිතකාමී වෙබ් අඩවි ගොඩනැගීමට මම දක්ෂයෙක්, පිරිසිදු නිර්මාණය, කාර්යසාධනය සහ භාවිත පහසුව කෙරෙහි විශේෂ අවධානයක් යොමු කරමි. සැබෑ ව්‍යාපෘති හරහා නව තාක්ෂණයන් අඛණ්ඩව ඉගෙන ගනිමින්, ඵලදායී හා ආකර්ෂණීය ඩිජිටල් අත්දැකීම් නිර්මාණය කිරීමට කටයුතු කරමි.',
-    'stat.1': 'අවුරුදු අත්දැකීම්',
-    'stat.2': 'ප්‍රධාන ව්‍යාපෘති',
-    'stat.3': 'සහතික සහ පාඨමාලා',
-    'about.contact': 'මා අමතන්න',
-    'edu.h': 'මගේ <span>අධ්‍යාපනය</span>',
-    'edu.education': 'අධ්‍යාපනය',
-    'edu.experience': 'අත්දැකීම්',
-    'skills.h': 'මගේ <span>කුසලතා</span>',
-    'skills.col1': 'Frontend සහ නිර්මාණය',
-    'skills.col2': 'Coding සහ Backend',
-    'skills.tech': 'මා භාවිත කරන තාක්ෂණයන්',
-    'proj.h': 'මගේ <span>ව්‍යාපෘති</span>',
-    'proj.details': 'විස්තර බලන්න',
-    'cert.h': 'මගේ <span>සහතික</span>',
-    'contact.h': 'මා <span>අමතන්න!</span>',
-    'ph.name': 'සම්පූර්ණ නම',
-    'ph.email': 'ඊමේල් ලිපිනය',
-    'ph.phone': 'ජංගම දුරකථන අංකය',
-    'ph.subject': 'විෂයය',
-    'ph.message': 'ඔබේ පණිවිඩය',
-    'form.submit': 'යවන්න',
-    'form.sending': 'යවමින්...',
-    'form.ok': 'ස්තූතියි! ඔබේ පණිවිඩය යවන ලදී.',
-    'form.err': 'අපොයි! යම් දෙයක් වැරදුණා. කරුණාකර නැවත උත්සාහ කරන්න.',
-    'footer.rights': 'සියලුම හිමිකම් ඇවිරිණි.',
-    'm.problem': 'ගැටලුව',
-    'm.approach': 'මා ගොඩනැගූ ආකාරය',
-    'm.outcome': 'ප්‍රතිඵලය',
-    'm.features': 'ප්‍රධාන ලක්ෂණ',
-    'm.challenges': 'විසඳූ ගැටලු',
-    'm.stack': 'තාක්ෂණ සමුච්චය',
-    'm.links': 'සබැඳි',
-    'm.shots': 'Screenshots',
-    'm.noshots': 'Screenshots ඉක්මනින් එකතු කරනු ලැබේ.',
-    'cert.hint': 'විශාල කර බැලීමට සහතිකය මත click කරන්න.',
-    'cert.more': 'සියල්ල පෙන්වන්න ({n})',
-    'cert.less': 'අඩුවෙන් පෙන්වන්න'
 };
+const t = key => en[key] || key;
 
-let lang = document.documentElement.getAttribute('lang') === 'si' ? 'si' : 'en';
-const t = key => (lang === 'si' && si[key]) || en[key] || key;
-
-function applyLang() {
-    document.documentElement.setAttribute('lang', lang);
-    $$('[data-i18n]').forEach(el => { el.innerHTML = t(el.dataset.i18n); });
-    $$('[data-i18n-ph]').forEach(el => el.setAttribute('placeholder', t(el.dataset.i18nPh)));
-    $('#lang-toggle').textContent = lang === 'si' ? 'EN' : 'සිං';
-    $('#year').textContent = new Date().getFullYear();
-    const hint = $('#cert-hint');
-    if (hint) hint.textContent = t('cert.hint');
-    if (typeof updateCertToggle === 'function') updateCertToggle();
-}
-
-$('#lang-toggle').addEventListener('click', () => {
-    lang = lang === 'si' ? 'en' : 'si';
-    try { localStorage.setItem('lang', lang); } catch (e) {}
-    applyLang();
-});
+$('#year').textContent = new Date().getFullYear();
 
 /* ---------- Preloader ---------- */
 const preloader = $('#preloader');
@@ -577,5 +502,3 @@ form.addEventListener('submit', async e => {
     }
 });
 
-/* ---------- Init ---------- */
-applyLang();

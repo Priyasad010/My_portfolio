@@ -1019,30 +1019,7 @@ section {
    v3 additions: language switch, tech grid, modal,
    lightbox, certificates
    ===================================================== */
-* { font-family: 'Poppins', 'Noto Sans Sinhala', sans-serif; }
-
-html[lang="si"] body { line-height: 1.75; }
-html[lang="si"] .home-content h1 { font-size: 5rem; }
-html[lang="si"] .heading { font-size: 4.4rem; }
-
 .no-scroll { overflow: hidden; }
-
-#lang-toggle {
-    background: transparent;
-    color: var(--main-color);
-    border: .2rem solid var(--main-color);
-    border-radius: .6rem;
-    padding: .3rem 1rem;
-    font-size: 1.5rem;
-    font-weight: 600;
-    cursor: pointer;
-    transition: .3s;
-}
-
-#lang-toggle:hover {
-    background: var(--main-color);
-    color: var(--bg-color);
-}
 
 .navbar a { margin-left: 2.5rem; }
 
