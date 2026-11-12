@@ -1552,3 +1552,14 @@ button.cert-thumb {
     font-size: 6.5rem;
     font-family: inherit;
 }
+
+/* ---------- Phone refinements ---------- */
+@media (max-width: 600px) {
+    html { font-size: 54%; }                 /* slightly larger base text on phones */
+    .btn-box .btn { flex: none; }            /* stacked buttons keep their full height */
+    .home-content p { font-size: 1.7rem; }
+}
+
+/* hero buttons: wide enough for "Download CV" on one line (desktop + tablet) */
+.btn-box { max-width: 42rem; }
+.btn-box .btn { white-space: nowrap; }
