@@ -6,235 +6,199 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Lasitha Priyasad - Personal Portfolio</title>
+    <meta name="description" content="Lasitha Priyasad - Web Developer and Computer Science undergraduate at Uva Wellassa University of Sri Lanka. Building modern, responsive websites with HTML, CSS and JavaScript.">
+    <meta name="author" content="Lasitha Priyasad">
+    <meta name="theme-color" content="#081b29">
 
+    <!-- Open Graph (link share preview) -->
+    <meta property="og:type" content="website">
+    <meta property="og:title" content="Lasitha Priyasad - Web Developer">
+    <meta property="og:description" content="Modern, responsive websites with clean design and great usability.">
+    <meta property="og:image" content="images/Untitled-1.png">
+
+    <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' rx='20' fill='%23081b29'/%3E%3Ctext x='50' y='68' font-size='56' font-family='Arial' font-weight='700' text-anchor='middle' fill='%2300abf0'%3EL%3C/text%3E%3C/svg%3E">
+
+    <script>
+        (function () {
+            var root = document.documentElement;
+            root.classList.add('js');
+            try {
+                var savedTheme = localStorage.getItem('theme');
+                if (savedTheme) root.setAttribute('data-theme', savedTheme);
+                if (localStorage.getItem('lang') === 'si') root.setAttribute('lang', 'si');
+            } catch (e) {}
+        })();
+    </script>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Sinhala:wght@400;500;600;700&family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css" rel="stylesheet">
     <link rel="stylesheet" href="css/style.css">
-
-
-    <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
 </head>
 
 <body>
 
+    <a href="#about" class="skip-link">Skip to content</a>
 
-     <header class="header">
-        <a href="#" class="logo">Lasitha Priyasad</a>
+    <!-- Preloader -->
+    <div id="preloader"><div class="loader"></div></div>
 
-        <div class="bx bx-menu" id="menu-icon"></div>
+    <!-- Scroll progress bar -->
+    <div id="scroll-progress"></div>
+
+    <header class="header">
+        <a href="#home" class="logo">Lasitha Priyasad</a>
 
         <nav class="navbar">
-            <a href="#home">home</a>
-            <a href="#about">about</a>
-            <a href="#education">education</a>
-            <a href="#skills">skills</a>
-            <a href="#contact">contact</a>
+            <a href="#home" class="active" data-i18n="nav.home">home</a>
+            <a href="#about" data-i18n="nav.about">about</a>
+            <a href="#education" data-i18n="nav.education">education</a>
+            <a href="#skills" data-i18n="nav.skills">skills</a>
+            <a href="#projects" data-i18n="nav.projects">projects</a>
+            <a href="#certificates" data-i18n="nav.certs">certificates</a>
+            <a href="#contact" data-i18n="nav.contact">contact</a>
         </nav>
-     </header>
 
+        <div class="header-actions">
+            <button id="lang-toggle" aria-label="Switch language" title="Switch language">සිං</button>
+            <button id="theme-toggle" aria-label="Toggle dark / light theme" title="Toggle theme"><i class='bx bx-sun'></i></button>
+            <button class="bx bx-menu" id="menu-icon" aria-label="Open menu"></button>
+        </div>
+    </header>
 
-
+    <main>
+    <!-- HOME -->
     <section class="home" id="home">
         <div class="home-content">
-            <h1>Hi, I'm <span>Lasitha Priyasad</span></h1>
+            <h1 data-i18n="hero.hi">Hi, I'm <span>Lasitha Priyasad</span></h1>
             <div class="text-animate">
-                <h3>Web Developer</h3>
+                <h3><span class="typing" id="typing"></span></h3>
             </div>
-            <p>I am a passionate web developer skilled in creating modern, responsive, and user-friendly websites using HTML, CSS, and JavaScript. I focus on clean design, performance, and usability while continuously learning new technologies and growing through real-world projects.
-            </p>
+            <p data-i18n="hero.p">I am a passionate web developer skilled in creating modern, responsive, and user-friendly websites using HTML, CSS, and JavaScript. I focus on clean design, performance, and usability while continuously learning new technologies and growing through real-world projects.</p>
 
             <div class="btn-box">
-                <a href="#" class="btn">Hire Me</a>
-                <a href="#" class="btn">Let's Talk</a>
-        </div>
-
+                <a href="#contact" class="btn" data-i18n="hero.hire">Hire Me</a>
+                <a href="cv/Lasitha_Priyasad_CV.pdf" class="btn" download data-i18n="hero.cv">Download CV</a>
+            </div>
         </div>
 
         <div class="home-img">
             <div class="img-border">
-                <img src="images/Untitled-1.png" alt="Profile">
+                <img src="images/Untitled-1.png" alt="Lasitha Priyasad profile photo">
             </div>
         </div>
 
         <div class="home-sci">
-            <a href="https://www.facebook.com/share/1DmBg8ruvL/?mibextid=wwXIfr" target="_blank"><i class='bx bxl-facebook'></i></a>
-            <a href="#"><i class='bx bxl-whatsapp'></i></a>
-            <a href="https://www.linkedin.com/in/lasitha-priyasad-3184732ab?utm_source=share&utm_campaign=share_via&utm_content=profile&utm_medium=ios_app" target="_blank"><i class='bx bxl-linkedin'></i></a>
-            <a href="https://www.instagram.com/sd_udara?igsh=YW5hMGN1dmQxY2Q0&utm_source=qr" target="_blank"><i class='bx bxl-instagram'></i></a>
+            <a href="https://www.facebook.com/share/1DmBg8ruvL/?mibextid=wwXIfr" target="_blank" rel="noopener" aria-label="Facebook"><i class='bx bxl-facebook'></i></a>
+            <a href="https://wa.me/94743398128" target="_blank" rel="noopener" aria-label="WhatsApp"><i class='bx bxl-whatsapp'></i></a>
+            <a href="https://www.linkedin.com/in/lasitha-priyasad-3184732ab" target="_blank" rel="noopener" aria-label="LinkedIn"><i class='bx bxl-linkedin'></i></a>
+            <a href="https://www.instagram.com/sd_udara" target="_blank" rel="noopener" aria-label="Instagram"><i class='bx bxl-instagram'></i></a>
         </div>
-
-        <div class="home-imgHover"></div>
     </section>
 
-
-     <section class="about" id="about">
-        <h2 class="heading">About <span>Me</span></h2>
+    <!-- ABOUT -->
+    <section class="about" id="about">
+        <h2 class="heading" data-i18n="about.h">About <span>Me</span></h2>
 
         <div class="about-img">
             <div class="img-border">
-                <img src="images/Untitled-1.png" alt="About Me">
+                <img src="images/Untitled-1.png" alt="About Lasitha" loading="lazy">
             </div>
             <span class="circle-spin"></span>
         </div>
 
         <div class="about-content">
-            <h3>Web Developer!</h3>
-            <p> I am a Computer Science and Information Technology undergraduate at Uva Wellassa University of Sri Lanka, passionate about web development and design. I specialize in building modern, responsive, and user-friendly websites using HTML, CSS, and JavaScript, with a strong focus on clean design, performance, and usability. I continuously learn new technologies and grow my skills through real-world projects to create effective and engaging digital experiences.</p>
+            <h3 data-i18n="about.title">Web Developer!</h3>
+            <p data-i18n="about.p">I am a Computer Science and Information Technology undergraduate at Uva Wellassa University of Sri Lanka, passionate about web development and design. I specialize in building modern, responsive, and user-friendly websites using HTML, CSS, and JavaScript, with a strong focus on clean design, performance, and usability. I continuously learn new technologies and grow my skills through real-world projects to create effective and engaging digital experiences.</p>
 
+            <div class="stats">
+                <div class="stat"><h4><span class="count" data-target="1">0</span>+</h4><p data-i18n="stat.1">Year Experience</p></div>
+                <div class="stat"><h4><span class="count" data-target="2">0</span></h4><p data-i18n="stat.2">Major Projects</p></div>
+                <div class="stat"><h4><span class="count" data-target="12">0</span>+</h4><p data-i18n="stat.3">Certificates &amp; Courses</p></div>
+            </div>
 
-                <div class="btn-box btns">
-                    <a href="#" class="btn">Read More</a>
-
-                </div>
+            <div class="btn-box btns">
+                <a href="#contact" class="btn" data-i18n="about.contact">Contact Me</a>
+            </div>
         </div>
-     </section>
+    </section>
 
-
-     <section class="education" id="education">
-        <h2 class="heading">My <span>Education</span></h2>
+    <!-- EDUCATION -->
+    <section class="education" id="education">
+        <h2 class="heading" data-i18n="edu.h">My <span>Education</span></h2>
         <div class="education-row">
             <div class="education-column">
-                <h3 class="title">Education</h3>
+                <h3 class="title" data-i18n="edu.education">Education</h3>
 
                 <div class="education-box">
                     <div class="education-content">
                         <div class="content">
-                            <div class="Year">📅 2022-2023</div>
+                            <div class="Year">📅 2022 - Present</div>
                             <h3>Uva Wellassa University of Sri Lanka</h3>
-                            <p>I am an undergraduate student following a Computer Science degree at Uva Wellassa University. I’m building a strong foundation in programming, problem-solving, and computing concepts, and I’m motivated to apply my knowledge to real-world challenges while continuing to grow my technical and analytical skills.
-</p>
-
+                            <p>I am an undergraduate student following a Computer Science degree at Uva Wellassa University. I'm building a strong foundation in programming, problem-solving, and computing concepts, and I'm motivated to apply my knowledge to real-world challenges while continuing to grow my technical and analytical skills.</p>
                         </div>
                     </div>
 
                     <div class="education-content">
                         <div class="content">
-                            <div class="Year">📅 2022-2023</div>
+                            <div class="Year">📅 2022 - Present</div>
                             <h3>BSc - Computer Science and Information Technology</h3>
-                            <p>I am an undergraduate pursuing a Bachelor’s degree in Industrial Information Technology at Uva Wellassa University of Sri Lanka. Through this program, I am developing strong knowledge in information technology, industrial systems, and practical, real-world applications, while continuously improving my technical and problem-solving skills.
-</p>
-
+                            <p>I am an undergraduate pursuing a Bachelor's degree in Industrial Information Technology at Uva Wellassa University of Sri Lanka. Through this program, I am developing strong knowledge in information technology, industrial systems, and practical, real-world applications, while continuously improving my technical and problem-solving skills.</p>
                         </div>
                     </div>
 
                     <div class="education-content">
                         <div class="content">
-                            <div class="Year">📅 2019-2020</div>
+                            <div class="Year">📅 2019 - 2020</div>
                             <h3>Advanced Level - School</h3>
-                            <p>I successfully passed the Advanced Level school examination in the Arts stream, gaining a strong foundation in arts subjects. In addition, I have developed good knowledge of Information Technology, enhancing my analytical thinking, creativity, and practical technical skills.
-</p>
-
+                            <p>I successfully passed the Advanced Level school examination in the Arts stream, gaining a strong foundation in arts subjects. In addition, I have developed good knowledge of Information Technology, enhancing my analytical thinking, creativity, and practical technical skills.</p>
                         </div>
                     </div>
-
-                    
-
                 </div>
             </div>
 
             <div class="education-column">
-                <h3 class="title">Experience</h3>
+                <h3 class="title" data-i18n="edu.experience">Experience</h3>
 
                 <div class="education-box">
                     <div class="education-content">
                         <div class="content">
-                            <div class="Year">💼 2025-2025</div>
-                            <h3>Web Design for beginners</h3>
-                            <p>I am a participant in the Web Design for Beginners course at the (CODL), University of Moratuwa. Through this course, I am gaining basic knowledge of web design concepts and developing essential skills to create simple and effective websites.
-</p>
-
+                            <div class="Year">💼 2025 - 2026</div>
+                            <h3>Web Development Intern</h3>
+                            <p>I am working as a Web Development Intern at Saiket Systems, where I gain hands-on experience in web technologies and contribute to developing and improving real-world web applications while enhancing my technical and professional skills.</p>
                         </div>
                     </div>
 
                     <div class="education-content">
                         <div class="content">
-                            <div class="Year">💼 2023-2024</div>
-                            <h3>Creative Design Workshop</h3>
-                            <p>I participated in a Creative Design Workshop, where I learned the basics of visual creativity, design thinking, and idea development. The workshop helped me improve my creativity and gain practical skills for designing attractive and effective content.
-</p>
-
+                            <div class="Year">💼 2025 - 2026</div>
+                            <h3>Assistant Designer - Leo Club of Uva Wellassa University</h3>
+                            <p>Appointed as the Assistant Designer of the Leo Club of Uva Wellassa University for the 2025/2026 term. I am responsible for developing and executing creative projects and initiatives, such as graphic design and video editing, that help promote the club's events and activities.</p>
                         </div>
                     </div>
 
                     <div class="education-content">
                         <div class="content">
-                            <div class="Year">💼 2024-2025</div>
+                            <div class="Year">💼 2025</div>
+                            <h3>Web Design for Beginners</h3>
+                            <p>I participated in the Web Design for Beginners course at the CODL, University of Moratuwa. Through this course, I gained basic knowledge of web design concepts and developed essential skills to create simple and effective websites.</p>
+                        </div>
+                    </div>
+
+                    <div class="education-content">
+                        <div class="content">
+                            <div class="Year">💼 2024 - 2025</div>
                             <h3>Front-End Web Development</h3>
-                            <p>I am a participant in the Front-End Web Development program at University of Moratuwa, where I am learning the fundamentals of building user-friendly and responsive websites using modern web technologies and best practices.
-</p>
-
+                            <p>I participated in the Front-End Web Development program at University of Moratuwa, where I learned the fundamentals of building user-friendly and responsive websites using modern web technologies and best practices.</p>
                         </div>
                     </div>
 
                     <div class="education-content">
                         <div class="content">
-                            <div class="Year">💼 2025-2026</div>
-                            <h3>Web Development intern</h3>
-                            <p>I am working as a Web Development Intern at Saiket Systems, where I gain hands-on experience in web technologies and contribute to developing and improving real-world web applications while enhancing my technical and professional skills.
-</p>
-
-                        </div>
-                    </div>
-
-                </div>
-            </div>
-        </div>
-     </section>
-
-
-    <section class="skills" id="skills">
-        <h2 class="heading">My <span>Skills</span></h2>
-
-        <div class="skills-row">
-            <div class="skills-column">
-                <h3 class="title">Professional Skills</h3>
-
-                <div class="skills-box">
-                    <div class="skills-content">
-                        <div class="progress">
-                            <h3>Web Design <span>80%</span></h3>
-                            <div class="bar"><span></span></div>
-                        </div>
-
-                        <div class="progress">
-                            <h3>Web Development <span>75%</span></h3>
-                            <div class="bar"><span></span></div>
-                        </div>
-
-                        <div class="progress">
-                            <h3>Graphic Design <span>85%</span></h3>
-                            <div class="bar"><span></span></div>
-                        </div>
-
-                        <div class="progress">
-                            <h3>React <span>75%</span></h3>
-                            <div class="bar"><span></span></div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <div class="skills-column">
-                <h3 class="title">Coding Skills</h3>
-
-                <div class="skills-box">
-                    <div class="skills-content">
-                        <div class="progress">
-                            <h3>HTML <span>90%</span></h3>
-                            <div class="bar"><span></span></div>
-                        </div>
-
-                        <div class="progress">
-                            <h3>CSS <span>80%</span></h3>
-                            <div class="bar"><span></span></div>
-                        </div>
-
-                        <div class="progress">
-                            <h3>JavaScript <span>70%</span></h3>
-                            <div class="bar"><span></span></div>
-                        </div>
-
-                        <div class="progress">
-                            <h3>SEO <span>75%</span></h3>
-                            <div class="bar"><span></span></div>
+                            <div class="Year">💼 2025</div>
+                            <h3>Creative Design Workshop</h3>
+                            <p>I participated in a Creative Design Workshop, where I learned the basics of visual creativity, design thinking, and idea development. The workshop helped me improve my creativity and gain practical skills for designing attractive and effective content.</p>
                         </div>
                     </div>
                 </div>
@@ -242,44 +206,148 @@
         </div>
     </section>
 
-    <section class="contact" id="contact">
-        <h2 class="heading">Contact <span>Me!</span></h2>
+    <!-- SKILLS -->
+    <section class="skills" id="skills">
+        <h2 class="heading" data-i18n="skills.h">My <span>Skills</span></h2>
 
-        <form action="https://formspree.io/f/xaqadloa" method="POST">
+        <div class="skills-row">
+            <div class="skills-column">
+                <h3 class="title" data-i18n="skills.col1">Frontend &amp; Design</h3>
+                <div class="skills-box">
+                    <div class="skills-content">
+                        <div class="progress" style="--w:80%"><h3>Web Design <em>80%</em></h3><div class="bar"><span></span></div></div>
+                        <div class="progress" style="--w:85%"><h3>Graphic Design <em>85%</em></h3><div class="bar"><span></span></div></div>
+                        <div class="progress" style="--w:75%"><h3>React.js <em>75%</em></h3><div class="bar"><span></span></div></div>
+                        <div class="progress" style="--w:75%"><h3>Tailwind CSS <em>75%</em></h3><div class="bar"><span></span></div></div>
+                        <div class="progress" style="--w:65%"><h3>Next.js <em>65%</em></h3><div class="bar"><span></span></div></div>
+                        <div class="progress" style="--w:60%"><h3>Android (Kotlin, Compose) <em>60%</em></h3><div class="bar"><span></span></div></div>
+                        <div class="progress" style="--w:75%"><h3>SEO <em>75%</em></h3><div class="bar"><span></span></div></div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="skills-column">
+                <h3 class="title" data-i18n="skills.col2">Coding &amp; Backend</h3>
+                <div class="skills-box">
+                    <div class="skills-content">
+                        <div class="progress" style="--w:90%"><h3>HTML <em>90%</em></h3><div class="bar"><span></span></div></div>
+                        <div class="progress" style="--w:80%"><h3>CSS <em>80%</em></h3><div class="bar"><span></span></div></div>
+                        <div class="progress" style="--w:70%"><h3>JavaScript <em>70%</em></h3><div class="bar"><span></span></div></div>
+                        <div class="progress" style="--w:65%"><h3>TypeScript <em>65%</em></h3><div class="bar"><span></span></div></div>
+                        <div class="progress" style="--w:70%"><h3>Node.js &amp; Express <em>70%</em></h3><div class="bar"><span></span></div></div>
+                        <div class="progress" style="--w:65%"><h3>PostgreSQL &amp; Prisma <em>65%</em></h3><div class="bar"><span></span></div></div>
+                        <div class="progress" style="--w:60%"><h3>Python <em>60%</em></h3><div class="bar"><span></span></div></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <h3 class="tech-title" data-i18n="skills.tech">Technologies I Work With</h3>
+        <div class="tech-grid" id="tech-grid"></div>
+    </section>
+
+    <!-- PROJECTS -->
+    <section class="projects" id="projects">
+        <h2 class="heading" data-i18n="proj.h">My <span>Projects</span></h2>
+
+        <div class="projects-container">
+            <article class="project-card" data-project="smart-class" tabindex="0" role="button" aria-label="Open Smart Class Management System details">
+                <div class="project-thumb"><i class='bx bx-qr-scan'></i></div>
+                <div class="project-body">
+                    <h3>Smart Class Management System</h3>
+                    <p class="project-meta">Group Project &middot; IIT 372-2 Project II &middot; Uva Wellassa University</p>
+                    <p>A centralized web platform for Thusitha Institute covering attendance, payments, exams, study areas and parent notifications, with AI-assisted attendance validation.</p>
+                    <div class="tags">
+                        <span>React.js</span><span>Node.js</span><span>PostgreSQL</span><span>Python</span><span>YOLOv8</span><span>OpenCV</span>
+                    </div>
+                    <span class="card-more"><span data-i18n="proj.details">View Details</span> <i class='bx bx-right-arrow-alt'></i></span>
+                </div>
+            </article>
+
+            <article class="project-card" data-project="rideprofit" tabindex="0" role="button" aria-label="Open RideProfit details">
+                <div class="project-thumb"><i class='bx bx-car'></i></div>
+                <div class="project-body">
+                    <h3>RideProfit</h3>
+                    <p class="project-meta">Personal Full-Stack Project &middot; Android + Web</p>
+                    <p>A profit-per-km overlay for ride-hailing drivers in Sri Lanka that rates each ride request green, amber or red. Android app, API, admin dashboard and billing system, in English, Sinhala and Tamil.</p>
+                    <div class="tags">
+                        <span>Kotlin</span><span>Jetpack Compose</span><span>Node.js</span><span>TypeScript</span><span>PostgreSQL</span><span>Next.js</span>
+                    </div>
+                    <span class="card-more"><span data-i18n="proj.details">View Details</span> <i class='bx bx-right-arrow-alt'></i></span>
+                </div>
+            </article>
+        </div>
+    </section>
+
+    <!-- CERTIFICATES -->
+    <section class="certificates" id="certificates">
+        <h2 class="heading" data-i18n="cert.h">My <span>Certificates</span></h2>
+
+        <div class="cert-grid" id="cert-grid"></div>
+        <div class="cert-more"><button class="filter-btn" id="cert-toggle" type="button"></button></div>
+    </section>
+
+    <!-- CONTACT -->
+    <section class="contact" id="contact">
+        <h2 class="heading" data-i18n="contact.h">Contact <span>Me!</span></h2>
+
+        <form id="contact-form" action="https://formspree.io/f/xaqadloa" method="POST">
+            <!-- spam honeypot: real visitors never see or fill this -->
+            <input type="text" name="_gotcha" class="hp-field" tabindex="-1" autocomplete="off" aria-hidden="true">
             <div class="input-box">
                 <div class="input-field">
-                    <input type="text" name="name" placeholder="Full Name" required>
-                    <span class="focus"></span>
+                    <input type="text" name="name" placeholder="Full Name" data-i18n-ph="ph.name" aria-label="Full Name" required>
                 </div>
                 <div class="input-field">
-                    <input type="email" name="email" placeholder="Email Address" required>
-                    <span class="focus"></span>
+                    <input type="email" name="email" placeholder="Email Address" data-i18n-ph="ph.email" aria-label="Email Address" required>
                 </div>
             </div>
             <div class="input-box">
                 <div class="input-field">
-                    <input type="tel" name="phone" placeholder="Mobile Number">
-                    <span class="focus"></span>
+                    <input type="tel" name="phone" placeholder="Mobile Number" data-i18n-ph="ph.phone" aria-label="Mobile Number">
                 </div>
                 <div class="input-field">
-                    <input type="text" name="subject" placeholder="Email Subject" required>
-                    <span class="focus"></span>
+                    <input type="text" name="subject" placeholder="Email Subject" data-i18n-ph="ph.subject" aria-label="Email Subject" required>
                 </div>
             </div>
 
             <div class="textarea-field">
-                <textarea name="message" id="message" cols="30" rows="10" placeholder="Your Message" required></textarea>
-                <span class="focus"></span>
+                <textarea name="message" id="message" cols="30" rows="10" placeholder="Your Message" data-i18n-ph="ph.message" aria-label="Your Message" required></textarea>
             </div>
 
             <div class="btn-box btns">
-                <button type="submit" class="btn">Submit</button>
+                <button type="submit" class="btn" id="submit-btn" data-i18n="form.submit">Submit</button>
             </div>
-
+            <p id="form-status" role="status" aria-live="polite"></p>
         </form>
     </section>
+    </main>
 
+    <footer class="footer">
+        <p>&copy; <span id="year"></span> Lasitha Priyasad. <span data-i18n="footer.rights">All rights reserved.</span></p>
+        <a href="#home" class="footer-top" aria-label="Back to top"><i class='bx bx-up-arrow-alt'></i></a>
+    </footer>
 
+    <button id="back-to-top" aria-label="Back to top"><i class='bx bx-up-arrow-alt'></i></button>
+
+    <!-- Project details modal -->
+    <div id="project-modal" class="overlay" hidden>
+        <div class="modal-box" role="dialog" aria-modal="true" aria-labelledby="modal-title">
+            <button class="overlay-close" data-close aria-label="Close"><i class='bx bx-x'></i></button>
+            <div id="modal-content"></div>
+        </div>
+    </div>
+
+    <!-- Image lightbox -->
+    <div id="lightbox" class="overlay lightbox" hidden>
+        <button class="overlay-close" data-close aria-label="Close"><i class='bx bx-x'></i></button>
+        <button class="lb-nav lb-prev" aria-label="Previous image"><i class='bx bx-chevron-left'></i></button>
+        <figure>
+            <img id="lb-img" src="" alt="">
+            <figcaption id="lb-caption"></figcaption>
+        </figure>
+        <button class="lb-nav lb-next" aria-label="Next image"><i class='bx bx-chevron-right'></i></button>
+    </div>
 
     <script src="js/script.js"></script>
 </body>
