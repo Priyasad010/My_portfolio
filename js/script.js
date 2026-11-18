@@ -623,6 +623,8 @@ const goTo = id => {
     if (el) el.scrollIntoView({ behavior: 'smooth' });
 };
 const openUrl = url => window.open(url, '_blank', 'noopener');
+// "?v=" makes browsers fetch the newest CV instead of an older cached copy (change it when the CV is updated)
+const CV_URL = 'cv/Lasitha_Priyasad_CV.pdf?v=20261118';
 
 const paletteItems = [
     { group: 'Go to', label: 'Home', icon: 'bx-home', keys: 'top start hero intro', run: () => goTo('home') },
@@ -634,10 +636,11 @@ const paletteItems = [
     { group: 'Go to', label: 'Contact', icon: 'bx-envelope', keys: 'form message hire reach', run: () => goTo('contact') },
     { group: 'Projects', label: 'Smart Class Management System', icon: 'bx-qr-scan', keys: 'smart class attendance react ai thusitha', run: () => openProject('smart-class') },
     { group: 'Projects', label: 'RideProfit', icon: 'bx-car', keys: 'ride profit android kotlin overlay pickme uber', run: () => openProject('rideprofit') },
-    { group: 'Actions', label: 'Download CV', icon: 'bx-download', keys: 'resume pdf', run: () => {
+    { group: 'Actions', label: 'View CV', icon: 'bx-book', keys: 'resume pdf open read', run: () => openUrl(CV_URL) },
+    { group: 'Actions', label: 'Download CV', icon: 'bx-download', keys: 'resume pdf save', run: () => {
         const a = document.createElement('a');
-        a.href = 'cv/Lasitha_Priyasad_CV.pdf';
-        a.download = '';
+        a.href = CV_URL;
+        a.download = 'Lasitha_Priyasad_CV.pdf';
         document.body.appendChild(a);
         a.click();
         a.remove();
