@@ -634,7 +634,7 @@ const goTo = id => {
 };
 const openUrl = url => window.open(url, '_blank', 'noopener');
 // "?v=" makes browsers fetch the newest CV instead of an older cached copy (change it when the CV is updated)
-const CV_URL = 'cv/Lasitha_Priyasad_CV.pdf?v=20261118';
+const CV_URL = 'cv/Lasitha_Priyasad_CV.pdf?v=298b763b';
 
 const paletteItems = [
     { group: 'Go to', label: 'Home', icon: 'bx-home', keys: 'top start hero intro', run: () => goTo('home') },
