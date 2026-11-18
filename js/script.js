@@ -136,25 +136,29 @@ if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
 
 /* ---------- Skills: grouped technologies (no percentages) ---------- */
 const DEVICON = 'https://cdn.jsdelivr.net/gh/devicons/devicon@v2.16.0/icons';
+// [name, devicon path or null, monogram shown when there is no logo]
 const skillGroups = [
     ['Frontend', 'bx-layout', [
         ['HTML5', 'html5/html5-original'], ['CSS3', 'css3/css3-original'], ['JavaScript', 'javascript/javascript-original'],
         ['TypeScript', 'typescript/typescript-original'], ['React', 'react/react-original'], ['Next.js', 'nextjs/nextjs-original'],
         ['Tailwind CSS', 'tailwindcss/tailwindcss-original']]],
     ['Backend & Database', 'bx-server', [
-        ['Node.js', 'nodejs/nodejs-original'], ['Express', 'express/express-original'],
-        ['PostgreSQL', 'postgresql/postgresql-original'], ['Prisma', 'prisma/prisma-original']]],
+        ['Node.js', 'nodejs/nodejs-original'], ['Express', 'express/express-original'], ['PHP', 'php/php-original'],
+        ['PostgreSQL', 'postgresql/postgresql-original'], ['Prisma', 'prisma/prisma-original'], ['JWT', null, 'JWT']]],
     ['AI & Mobile', 'bx-chip', [
         ['Python', 'python/python-original'], ['FastAPI', 'fastapi/fastapi-original'], ['OpenCV', 'opencv/opencv-original'],
-        ['Kotlin', 'kotlin/kotlin-original'], ['Android', 'android/android-original']]],
+        ['YOLOv8', null, 'YOLO'], ['Kotlin', 'kotlin/kotlin-original'], ['Jetpack Compose', null, 'JC'], ['Android', 'android/android-original']]],
     ['Tools & Cloud', 'bx-cloud', [
-        ['Git', 'git/git-original'], ['GitHub', 'github/github-original'], ['Vercel', 'vercel/vercel-original'], ['Figma', 'figma/figma-original']]]
+        ['Git', 'git/git-original'], ['GitHub', 'github/github-original'], ['GitHub Actions', 'githubactions/githubactions-original'],
+        ['Docker', 'docker/docker-original'], ['Vercel', 'vercel/vercel-original'], ['Neon', null, 'N'], ['Figma', 'figma/figma-original']]]
 ];
+const techTile = ([name, path, mono]) => path
+    ? `<div class="tech"><img src="${DEVICON}/${path}.svg" alt="${esc(name)} logo" loading="lazy" onerror="this.remove()"><span>${esc(name)}</span></div>`
+    : `<div class="tech"><span class="mono" aria-hidden="true">${esc(mono || name.slice(0, 2))}</span><span>${esc(name)}</span></div>`;
 $('#skill-groups').innerHTML = skillGroups.map(([title, icon, items]) => `
     <div class="skill-group">
         <h3><i class='bx ${icon}'></i> ${esc(title)}</h3>
-        <div class="tech-row">${items.map(([name, path]) =>
-            `<div class="tech"><img src="${DEVICON}/${path}.svg" alt="${esc(name)} logo" loading="lazy" onerror="this.remove()"><span>${esc(name)}</span></div>`).join('')}</div>
+        <div class="tech-row">${items.map(techTile).join('')}</div>
     </div>`).join('');
 
 /* ---------- Lightbox ---------- */
@@ -260,7 +264,12 @@ const rideSystemSvg = archSvg(640, 460,
 const projects = {
     'smart-class': {
         title: 'Smart Class Management System',
-        meta: 'Group Project · IIT 372-2 Project II · Department of Computer Science and Informatics, Uva Wellassa University',
+        meta: 'Group Project (team of 4) · IIT 372-2 Project II · Department of Computer Science and Informatics, Uva Wellassa University',
+        contribution: [
+            'Built the Admin Hub: audit log, promotions, contact messages and reports.',
+            'Built the landing, courses and teachers pages, and the login / authentication flow.',
+            'Wrote the Node.js controllers for auth, users, reports, promotions and contact.'
+        ],
         overview: 'A centralized web-based platform developed for Thusitha Institute that brings the key academic and administrative operations of a tuition institute into a single system. Built as a group project using an Agile–Scrum methodology across four sprints: system architecture, smart attendance and payments, study area management, examinations, website management, testing and deployment.',
         features: [
             'Role-based authentication and access control',
@@ -401,6 +410,7 @@ function openProject(id) {
         </div>` : ''}
         ${p.diagrams ? `<h4>Architecture</h4>${p.diagrams.map(d =>
             `<p class="arch-cap">${esc(d.title)}</p><div class="arch-wrap">${d.svg}</div>`).join('')}<p class="arch-hint">Swipe sideways to see the whole diagram.</p>` : ''}
+        ${p.contribution ? `<h4>My Contribution</h4>${list(p.contribution)}` : ''}
         <h4>${esc(t('m.features'))}</h4>
         ${list(p.features)}
         ${p.highlight ? `<div class="modal-highlight"><strong>${esc(p.highlight[0])}</strong><p>${esc(p.highlight[1])}</p></div>` : ''}
